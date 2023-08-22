@@ -1,0 +1,8 @@
+spring:
+  config:
+    import: classpath:env.properties
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DB_DATABASE}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
