@@ -3,6 +3,6 @@ spring:
     import: classpath:env.properties
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_DATABASE}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mariadb://swacademy.null0xff.com:23306/swacademy
+    username: swacademy
+    password: DVci9IPms57L6ue1zdELbwEgA
