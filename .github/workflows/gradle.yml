@@ -25,6 +25,7 @@ jobs:
         with:
           java-version: 17
           distribution: microsoft
+
       - name: Make env.properties
         run: |
           # Create env.properties
