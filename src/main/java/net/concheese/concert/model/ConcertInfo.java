@@ -1,4 +1,4 @@
-package net.concheese.concert;
+package net.concheese.concert.model;
 
 import java.util.List;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class ConcertInfo {
     this.ticketing = ticketing;
     this.description = description;
   }
-  
+
 }
 
 

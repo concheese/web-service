@@ -1,4 +1,4 @@
-package net.concheese.concert;
+package net.concheese.concert.model;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
