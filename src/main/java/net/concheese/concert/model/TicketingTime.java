@@ -11,7 +11,7 @@ import java.util.UUID;
 public class TicketingTime {
     private UUID ticketingTimeId;
     private LocalDateTime ticketingStartTime;
-    private String target;
+    private Target target;
     private URL url;
     private LocalDateTime createdAt;
 
