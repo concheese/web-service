@@ -15,7 +15,7 @@ public class TicketingTime {
     private URL url;
     private LocalDateTime createdAt;
 
-            public TicketingTime(UUID ticketingTimeId, LocalDateTime ticketingStartTime, String target, URL url, LocalDateTime createdAt, LocalDateTime updatedAt) {
+            public TicketingTime(UUID ticketingTimeId, LocalDateTime ticketingStartTime, Target target, URL url, LocalDateTime createdAt, LocalDateTime updatedAt) {
                 this.ticketingTimeId = ticketingTimeId;
                 this.ticketingStartTime = ticketingStartTime;
                 this.target = target;
