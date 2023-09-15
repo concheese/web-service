@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Configure') {
+        stage('Build') {
             environment {
                 DB_DATABASE = credentials('swacademy-database-url')
                 DB_USER = credentials('swacademy-database-user')
@@ -14,10 +14,6 @@ pipeline {
                     echo "DB_USER=$DB_USER" >> src/main/resources/env.properties
                     echo "DB_PASSWORD=$DB_PASSWORD" >> src/main/resources/env.properties
                 '''
-            }
-        }
-        stage('Build') {
-            steps {
                 sh './gradlew clean build'
             }
         }
