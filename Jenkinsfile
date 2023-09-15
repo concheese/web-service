@@ -6,6 +6,14 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Configure') {
+            steps {
+                touch src/main/resources/env.properties
+                echo "DB_DATABASE=$DB_DATABASE" >> src/main/resources/env.properties
+                echo "DB_USER=$DB_USER" >> src/main/resources/env.properties
+                echo "DB_PASSWORD=$DB_PASSWORD" >> src/main/resources/env.properties
+            }
+        }
         stage('Build') {
             steps {
                 sh './gradlew clean build'
