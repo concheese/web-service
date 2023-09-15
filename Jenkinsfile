@@ -17,5 +17,10 @@ pipeline {
                 sh './gradlew clean build'
             }
         }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Let\'s Deploy!"'
+            }
+        }
     }
 }
