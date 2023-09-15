@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Configure') {
             environment {
                 DB_DATABASE = credentials('swacademy-database-url')
