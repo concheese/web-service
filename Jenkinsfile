@@ -7,6 +7,11 @@ pipeline {
             }
         }
         stage('Configure') {
+            environment {
+                DB_DATABASE = credentials('swacademy-database-url')
+                DB_USER = credentials('swacademy-database-user')
+                DB_PASSWORD = credentials('swacademy-database-password')
+            }
             steps {
                 sh '''
                     touch src/main/resources/env.properties
