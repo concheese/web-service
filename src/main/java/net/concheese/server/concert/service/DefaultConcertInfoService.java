@@ -23,7 +23,7 @@ public class DefaultConcertInfoService implements ConcertInfoService {
       ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
     // TODO: 구현 필요
-    return null;
+    return new ConcertInfo();
   }
 
   @Override
