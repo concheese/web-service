@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DefaultConcertInfoService implements ConcertInfoService {
+
   private final DefaultConcertRepository concertRepository;
 
   public DefaultConcertInfoService(DefaultConcertRepository concertRepository) {
@@ -28,7 +29,8 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   public ConcertInfo createInfo(String title, Genre genre, Location location,
       ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location, concertTicketing, ticketing, concertDate, description, link);
+    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location,
+        concertTicketing, ticketing, concertDate, description, link);
     return concertRepository.insert(concertInfo);
   }
 
@@ -36,7 +38,8 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, Location location,
       ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    return concertRepository.update(infoId, title, genre,location, concertTicketInfo, ticketing, concertDate, description, link);
+    return concertRepository.update(infoId, title, genre, location, concertTicketInfo, ticketing,
+        concertDate, description, link);
   }
 
   @Override
