@@ -1,6 +1,7 @@
 package net.concheese.server.concert.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import net.concheese.server.concert.model.ConcertDate;
 import net.concheese.server.concert.model.ConcertInfo;
@@ -43,13 +44,13 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public ConcertInfo readInfo(UUID infoId) {
+  public Optional<ConcertInfo> readInfo(UUID infoId) {
     return concertRepository.readById(infoId);
   }
 
   @Override
   public List<ConcertInfo> readInfoList(Genre genre) {
-    return concertRepository.readInfoList(genre);
+    return concertRepository.readByGenre(genre);
   }
 
   @Override

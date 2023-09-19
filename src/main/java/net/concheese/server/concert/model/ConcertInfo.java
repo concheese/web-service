@@ -34,4 +34,15 @@ public class ConcertInfo {
     this.description = description;
     this.link = link;
   }
+
+    public Object getPostId() {
+    }
+
+  public Object getCategory() {
+    return category;
+  }
+
+  public void setCategory(Object category) {
+    this.category = category;
+  }
 }

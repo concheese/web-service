@@ -1,6 +1,7 @@
 package net.concheese.server.concert.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import net.concheese.server.concert.model.ConcertDate;
 import net.concheese.server.concert.model.ConcertInfo;
@@ -33,9 +34,10 @@ public interface ConcertRepository {
    * @param link              콘서트와 관련된 업데이트된 링크
    * @return 업데이트된 {@link ConcertInfo}.
    */
+
   ConcertInfo update(UUID infoId, String title, Genre genre, Location location,
-      ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link);
+                     ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
+                     String description, String link);
 
   /**
    * 고유 식별자로 콘서트 정보를 읽어옵니다.
@@ -43,7 +45,7 @@ public interface ConcertRepository {
    * @param infoId 읽어올 콘서트 정보의 고유 식별자
    * @return 찾은 경우 {@link ConcertInfo} 찾지 못한 경우 {@code null}
    */
-  ConcertInfo readById(UUID infoId);
+  Optional<ConcertInfo> readById(UUID infoId);
 
   /**
    * 장르로 필터링된 콘서트 정보 항목 목록을 검색합니다
@@ -51,7 +53,7 @@ public interface ConcertRepository {
    * @param genre 필터링할 장르
    * @return 해당 장르와 일치하는 {@link ConcertInfo} 항목 목록
    */
-  List<ConcertInfo> readInfoList(Genre genre);
+  List<ConcertInfo> readByGenre(Genre genre);
 
   /**
    * 모든 콘서트 정보 항목의 목록을 검색합니다
