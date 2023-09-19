@@ -7,6 +7,7 @@ import net.concheese.server.concert.model.ConcertInfo;
 import net.concheese.server.concert.model.ConcertTicketInfo;
 import net.concheese.server.concert.model.Genre;
 import net.concheese.server.concert.model.Location;
+import net.concheese.server.concert.repository.DefaultConcertRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,43 +18,44 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DefaultConcertInfoService implements ConcertInfoService {
+  private final DefaultConcertRepository concertRepository;
+
+  public DefaultConcertInfoService(DefaultConcertRepository concertRepository) {
+    this.concertRepository = concertRepository;
+  }
 
   @Override
   public ConcertInfo createInfo(String title, Genre genre, Location location,
       ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    // TODO: 구현 필요
-    return new ConcertInfo();
+    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location, concertTicketing, ticketing, concertDate, description, link);
+    return concertRepository.insert(concertInfo);
   }
 
   @Override
   public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, Location location,
       ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    // TODO: 구현 필요
-    return null;
+    return concertRepository.update(infoId, title, genre,location, concertTicketInfo, ticketing, concertDate, description, link);
   }
 
   @Override
   public ConcertInfo readInfo(UUID infoId) {
-    // TODO: 구현 필요
-    return null;
+    return concertRepository.readById(infoId);
   }
 
   @Override
   public List<ConcertInfo> readInfoList(Genre genre) {
-    // TODO: 구현 필요
-    return null;
+    return concertRepository.readInfoList(genre);
   }
 
   @Override
   public List<ConcertInfo> readAllInfo() {
-    // TODO: 구현 필요
-    return null;
+    return concertRepository.readAllInfo();
   }
 
   @Override
   public void deleteInfo(UUID infoId) {
-    // TODO: 구현 필요
+    concertRepository.deleteInfo(infoId);
   }
 }
