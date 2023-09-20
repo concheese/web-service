@@ -57,7 +57,7 @@ public interface ConcertInfoService {
    * @param infoId 읽어올 콘서트 정보의 고유 식별자.
    * @return 찾은 경우 {@link ConcertInfo} 또는 찾지 못한 경우 {@code null}.
    */
-  Optional<ConcertInfo> readInfo(UUID infoId);
+  ConcertInfo readInfo(UUID infoId);
 
   /**
    * 장르로 필터링된 콘서트 정보 항목 목록을 검색합니다.

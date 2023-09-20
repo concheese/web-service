@@ -44,7 +44,7 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public Optional<ConcertInfo> readInfo(UUID infoId) {
+  public ConcertInfo readInfo(UUID infoId) {
     return concertRepository.readById(infoId);
   }
 
