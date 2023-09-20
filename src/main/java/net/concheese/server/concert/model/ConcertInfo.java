@@ -22,8 +22,8 @@ public class ConcertInfo {
   private String link;
 
   public ConcertInfo(UUID infoId, String title, Genre genre, Location location,
-      ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link) {
+                     ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
+                     String description, String link) {
     this.infoId = infoId;
     this.title = title;
     this.genre = genre;
@@ -35,14 +35,73 @@ public class ConcertInfo {
     this.link = link;
   }
 
-    public Object getPostId() {
-    }
-
-  public Object getCategory() {
-    return category;
+  public UUID getInfoId() {
+    return infoId;
   }
 
-  public void setCategory(Object category) {
-    this.category = category;
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public Genre getGenre() {
+    return genre;
+  }
+
+  public void setGenre(Genre genre) {
+    this.genre = genre;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
+  }
+
+  public ConcertTicketInfo getConcertTicketing() {
+    return concertTicketing;
+  }
+
+  public void setConcertTicketing(ConcertTicketInfo concertTicketing) {
+    this.concertTicketing = concertTicketing;
+  }
+
+  public ConcertTicketInfo getTicketing() {
+    return ticketing;
+  }
+
+  public void setTicketing(ConcertTicketInfo ticketing) {
+    this.ticketing = ticketing;
+  }
+
+  public ConcertDate getConcertDate() {
+    return concertDate;
+  }
+
+  public void setConcertDate(ConcertDate concertDate) {
+    this.concertDate = concertDate;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getLink() {
+    return link;
+  }
+
+  public void setLink(String link) {
+    this.link = link;
   }
 }
+
+
