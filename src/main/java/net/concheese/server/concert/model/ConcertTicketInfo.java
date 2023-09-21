@@ -8,11 +8,11 @@ import java.util.UUID;
  * {@code ConcertTicketInfo} 클래스는 콘서트 티켓 정보를 나타내는 모델입니다.
  */
 public class ConcertTicketInfo {
-    UUID ticketingID;
-    LocalDate startDate;
-    LocalDate endDate;
-    LocalTime startTime;
-    TicketingType type;
+    private UUID ticketingID;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalTime startTime;
+    private TicketingType type;
 
     public UUID getTicketingID() {
         return ticketingID;
@@ -55,6 +55,10 @@ public class ConcertTicketInfo {
     }
 
     public ConcertTicketInfo(UUID ticketingID, LocalDate startDate, LocalDate endDate, LocalTime startTime, TicketingType type) {
+        this.ticketingID = ticketingID;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.type = type;
     }
-    // TODO: 구현 필요
 }
