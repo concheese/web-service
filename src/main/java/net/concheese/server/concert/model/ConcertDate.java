@@ -8,10 +8,10 @@ import java.util.UUID;
  * {@code ConcertDate} 클래스는 콘서트의 날짜 및 시간 정보를 나타내는 모델입니다.
  */
 public class ConcertDate {
-    UUID dateID;
-    LocalDate startDate;
-    LocalDate endDate;
-    LocalTime startTime;
+    private UUID dateID;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalTime startTime;
 
     public ConcertDate(UUID dateID, LocalDate startDate, LocalDate endDate, LocalTime startTime) {
         this.dateID = dateID;
