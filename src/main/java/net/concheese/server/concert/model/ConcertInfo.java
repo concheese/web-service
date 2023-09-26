@@ -1,5 +1,6 @@
 package net.concheese.server.concert.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,8 @@ public class ConcertInfo {
   private ConcertDate concertDate;
   private String description;
   private String link;
+  private LocalDateTime created_at;
+  private LocalDateTime updated_at;
 
   public ConcertInfo(UUID infoId, String title, Genre genre, Location location,
                      ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
@@ -33,6 +36,8 @@ public class ConcertInfo {
     this.concertDate = concertDate;
     this.description = description;
     this.link = link;
+    this.created_at = LocalDateTime.now();
+    this.updated_at = LocalDateTime.now();
   }
 
   public UUID getInfoId() {
@@ -101,6 +106,12 @@ public class ConcertInfo {
 
   public void setLink(String link) {
     this.link = link;
+  }
+  public LocalDateTime getCreated_at() {
+    return created_at;
+  }
+  public LocalDateTime getUpdated_at() {
+    return updated_at;
   }
 }
 

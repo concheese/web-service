@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import jakarta.annotation.PostConstruct;
@@ -68,6 +69,8 @@ public class DefaultConcertRepository implements ConcertRepository {
     paramMap.put("concertDate", concertInfo.getConcertDate().toString());
     paramMap.put("description", concertInfo.getDescription());
     paramMap.put("link", concertInfo.getLink());
+    paramMap.put("created_at", LocalDateTime.now());
+    paramMap.put("updated_at", LocalDateTime.now());
     return paramMap;
   }
   // ???
@@ -104,7 +107,7 @@ public class DefaultConcertRepository implements ConcertRepository {
   @Override
   public ConcertInfo insert(ConcertInfo concertInfo) {
     int update = namedJdbcTemplate.update(
-                "INSERT INTO CONCERT(INFO_ID, TITLE, GENRE, LOCATION, PRE_TICKETING, TICKETING, CONCERT_DATE, DESCRIPTION, LINK) VALUES(UNHEX(REPLACE(:infoId, '-', '')), :title, :genre, :location, :concertTicketInfo, :ticketing, :concertDate, :description, :link)",
+                "INSERT INTO CONCERT(INFO_ID, TITLE, GENRE, LOCATION, PRE_TICKETING, TICKETING, CONCERT_DATE, DESCRIPTION, LINK, CREATED_AT, UPDATED_AT) VALUES(UNHEX(REPLACE(:infoId, '-', '')), :title, :genre, :location, :concertTicketInfo, :ticketing, :concertDate, :description, :link, :created_at, :updated_at)",
                 toParamMap(concertInfo)); // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장하고, 그 Map을 update에 저장한 후 update를 실행한다.
     if (update != 1) {
       throw new RuntimeException("Nothing was inserted");
@@ -124,7 +127,7 @@ public class DefaultConcertRepository implements ConcertRepository {
     UUID ticketingId = concertInfo.getTicketing().getTicketingID();
     /** 맞나? **/
     int update = namedJdbcTemplate.update(
-            "UPDATE CONCERT SET TITLE = :title, GENRE = :genre, LOCATION = :locationID, PRE_TICKETING = :concertTicketingID, TICKETING = :ticketingID, CONCERT_DATE = :concertDate, DESCRIPTION = :description, LINK = :link WHERE INFO_ID = UNHEX(REPLACE(:infoId, '-', ''))",
+            "UPDATE CONCERT SET TITLE = :title, GENRE = :genre, LOCATION = :locationID, PRE_TICKETING = :concertTicketingID, TICKETING = :ticketingID, CONCERT_DATE = :concertDate, DESCRIPTION = :description, LINK = :link, UPDATED_AT = :updated_at WHERE INFO_ID = UNHEX(REPLACE(:infoId, '-', ''))",
             toParamMap(concertInfo));
     if (update != 1) {
       throw new RuntimeException("Nothing was updated");
