@@ -10,7 +10,6 @@ import java.util.UUID;
 public class ConcertTicketInfo {
     private UUID ticketingID;
     private LocalDate startDate;
-    private LocalDate endDate;
     private LocalTime startTime;
     private TicketingType type;
 
@@ -30,14 +29,6 @@ public class ConcertTicketInfo {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -54,10 +45,16 @@ public class ConcertTicketInfo {
         this.type = type;
     }
 
-    public ConcertTicketInfo(UUID ticketingID, LocalDate startDate, LocalDate endDate, LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo(UUID ticketingID, LocalDate startDate, LocalTime startTime, TicketingType type) {
         this.ticketingID = ticketingID;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
+        this.type = type;
+    }
+
+    public ConcertTicketInfo(LocalDate startDate,LocalTime startTime, TicketingType type) {
+        this.ticketingID = UUID.randomUUID();
+        this.startDate = startDate;
         this.startTime = startTime;
         this.type = type;
     }

@@ -28,10 +28,14 @@ public class DefaultConcertInfoService implements ConcertInfoService {
 
   @Override
   public ConcertInfo createInfo(String title, Genre genre, Location location,
-      ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
+      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
+//    ConcertTicketInfo preTicketing = new ConcertTicketInfo(UUID.randomUUID(), preTicketing.getStartDate(),
+//        preTicketing.getEndDate(), preTicketing.getStartTime(), preTicketing.getType());
+//    ConcertTicketInfo ticketing = new ConcertTicketInfo(UUID.randomUUID(), ticketing.getStartDate(),
+//        ticketing.getEndDate(), ticketing.getStartTime(), ticketing.getType());
     ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location,
-        concertTicketing, ticketing, concertDate, description, link);
+        preTicketing, ticketing, concertDate, description, link);
     return concertRepository.insert(concertInfo);
   }
 

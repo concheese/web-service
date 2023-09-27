@@ -10,11 +10,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import jakarta.annotation.PostConstruct;
-import net.concheese.server.concert.model.ConcertDate;
-import net.concheese.server.concert.model.ConcertInfo;
-import net.concheese.server.concert.model.ConcertTicketInfo;
-import net.concheese.server.concert.model.Genre;
-import net.concheese.server.concert.model.Location;
+import net.concheese.server.concert.model.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -50,6 +46,7 @@ public class DefaultConcertRepository implements ConcertRepository {
     Genre genre = Genre.valueOf(resultSet.getString("GENRE")); // Genre.valueOf()는 String을 Genre로 변환해준다.resultSet.getString("GENRE")는 DB에서 가져온 String을 반환한다.
     Location location = locationRepository.readById(toUUID(resultSet.getBytes("LOCATION_ID")));// id로 콘서트 정보를 읽어옵니다. 없을 때에 대해 예외처리 필요
     ConcertTicketInfo concertTicketing = ticketingRepository.readById(toUUID(resultSet.getBytes("PRE_TICKETING")));
+//    Artist artist = null; // artist는 아직 구현하지 않았습니다.
     ConcertTicketInfo ticketing = ticketingRepository.readById(toUUID(resultSet.getBytes("TICKETING")));
     ConcertDate concertDate = concertDateRepository.readById(toUUID(resultSet.getBytes("CONCERT_DATE")));
     String description = resultSet.getString("DESCRIPTION");
@@ -64,7 +61,7 @@ public class DefaultConcertRepository implements ConcertRepository {
     paramMap.put("title", concertInfo.getTitle());
     paramMap.put("genre", concertInfo.getGenre().toString());
     paramMap.put("location", concertInfo.getLocation().getLocationID());
-    paramMap.put("concertTicketing", concertInfo.getConcertTicketing().getTicketingID());
+    paramMap.put("concertTicketing", concertInfo.getPreTicketing().getTicketingID());
     paramMap.put("ticketing", concertInfo.getTicketing().getTicketingID());
     paramMap.put("concertDate", concertInfo.getConcertDate().toString());
     paramMap.put("description", concertInfo.getDescription());
@@ -113,7 +110,7 @@ public class DefaultConcertRepository implements ConcertRepository {
       throw new RuntimeException("Nothing was inserted");
     }
     locationRepository.insert(concertInfo.getLocation());           /** 필요할까요? **/
-    ticketingRepository.insert(concertInfo.getConcertTicketing());  /** 필요할까요? **/
+    ticketingRepository.insert(concertInfo.getPreTicketing());  /** 필요할까요? **/
     return concertInfo; // DB에 저장한 ConcertInfo를 반환한다.
   }
 
@@ -123,7 +120,7 @@ public class DefaultConcertRepository implements ConcertRepository {
       String description, String link) {
     ConcertInfo concertInfo = readById(infoId);
     UUID locationId = concertInfo.getLocation().getLocationID();
-    UUID concertTicketingId = concertInfo.getConcertTicketing().getTicketingID();
+    UUID concertTicketingId = concertInfo.getPreTicketing().getTicketingID();
     UUID ticketingId = concertInfo.getTicketing().getTicketingID();
     /** 맞나? **/
     int update = namedJdbcTemplate.update(
