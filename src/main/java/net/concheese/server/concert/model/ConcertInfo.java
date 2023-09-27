@@ -16,7 +16,7 @@ public class ConcertInfo {
   private String title;
   private Genre genre;
   private Location location;
-//  private Artist artist;
+  private String artist;
   private ConcertTicketInfo preTicketing;
   private ConcertTicketInfo ticketing;
   private ConcertDate concertDate;
@@ -25,13 +25,14 @@ public class ConcertInfo {
   private LocalDateTime created_at;
   private LocalDateTime updated_at;
 
-  public ConcertInfo(UUID infoId, String title, Genre genre, Location location,
+  public ConcertInfo(UUID infoId, String title, Genre genre, Location location, String artist,
                      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
                      String description, String link) {
     this.infoId = infoId;
     this.title = title;
     this.genre = genre;
     this.location = location;
+    this.artist = artist;
     this.preTicketing = preTicketing;
     this.ticketing = ticketing;
     this.concertDate = concertDate;
@@ -39,6 +40,14 @@ public class ConcertInfo {
     this.link = link;
     this.created_at = LocalDateTime.now();
     this.updated_at = LocalDateTime.now();
+  }
+
+  public String getArtist() {
+    return artist;
+  }
+
+  public void setArtist(String artist) {
+    this.artist = artist;
   }
 
   public UUID getInfoId() {

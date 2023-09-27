@@ -35,7 +35,7 @@ public interface ConcertRepository {
    * @return 업데이트된 {@link ConcertInfo}.
    */
 
-  ConcertInfo update(UUID infoId, String title, Genre genre, Location location,
+  ConcertInfo update(UUID infoId, String title, Genre genre, Location location, String artist,
                      ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
                      String description, String link);
 
