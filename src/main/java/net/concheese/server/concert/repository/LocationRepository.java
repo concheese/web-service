@@ -38,9 +38,8 @@ public class LocationRepository {
         UUID locationID = toUUID(resultSet.getBytes("LOCATION_ID"));
         int coordinate_1 = resultSet.getInt("COORDINATE_1");
         int coordinate_2 = resultSet.getInt("COORDINATE_2");
-        int coordinate_3 = resultSet.getInt("COORDINATE_3");
         String locationName = resultSet.getString("LOCATION_NAME");
-        return new Location(locationID, coordinate_1, coordinate_2, coordinate_3, locationName);
+        return new Location(locationID, coordinate_1, coordinate_2, locationName);
     }
     private Map<String, Object> toParamMap(Location location) {
         // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장한다.
@@ -48,7 +47,6 @@ public class LocationRepository {
         paramMap.put("locationID", location.getLocationID().toString().getBytes());
         paramMap.put("coordinate_1", location.getCoordinate_1());
         paramMap.put("coordinate_2", location.getCoordinate_2());
-        paramMap.put("coordinate_3", location.getCoordinate_3());
         paramMap.put("locationName", location.getLocationName());
 
         return paramMap;

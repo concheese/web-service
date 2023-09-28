@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PostServiceTest {
     private final ConcertInfoRequest postRequest = new ConcertInfoRequest("Test Concert", Genre.IDOL,
-            new Location(UUID.randomUUID(),1,2,3,"local"),
+            new Location(UUID.randomUUID(),1,2,"local"),
             "Rho",
             null,
             new ConcertTicketInfo(UUID.randomUUID(), LocalDate.now(), LocalTime.now(), TicketingType.GENERAL_SALE),
