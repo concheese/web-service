@@ -1,5 +1,6 @@
 package net.concheese.server.concert.model;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -9,6 +10,7 @@ public class Location {
     private UUID locationID;
     private int coordinate_1;
     private int coordinate_2;
+    private List<Integer> coordinates;
     private String locationName;
 
     public Location(UUID locationID, int coordinate_1, int coordinate_2, String locationName) {
@@ -16,6 +18,12 @@ public class Location {
         this.coordinate_1 = coordinate_1;
         this.coordinate_2 = coordinate_2;
         this.locationName = locationName;
+    }
+
+
+    public Location(UUID locationID, List<Integer> coordinates) {
+        this.locationID = locationID;
+        this.coordinates = coordinates;
     }
 
     public UUID getLocationID() {
@@ -48,6 +56,14 @@ public class Location {
 
     public void setLocationName(String locationName) {
         this.locationName = locationName;
+    }
+
+    public void setCoordinates(List<Integer> coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public List<Integer> getCoordinates() {
+        return coordinates;
     }
 // TODO: 구현 필요
 }
