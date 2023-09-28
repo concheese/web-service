@@ -45,6 +45,11 @@ public class ConcertInfoRestController {
             request.description(), request.link()));
   }
 
+  @PostMapping("/echo")
+  public ResponseEntity<String> infoString(@RequestBody ConcertInfoRequest request) {
+    return ResponseEntity.ok(request.toString());
+  }
+
   /**
    * 콘서트 정보를 업데이트합니다.
    *

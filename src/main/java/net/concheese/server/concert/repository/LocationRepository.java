@@ -48,7 +48,6 @@ public class LocationRepository {
         paramMap.put("coordinate_1", location.getCoordinate_1());
         paramMap.put("coordinate_2", location.getCoordinate_2());
         paramMap.put("locationName", location.getLocationName());
-
         return paramMap;
     }
     @PostConstruct
@@ -80,7 +79,7 @@ public class LocationRepository {
 
     public Location insert(Location location) {
         int update = namedJdbcTemplate.update(
-                "INSERT INTO LOCATION (LOCATION_ID, COORDINATE_1, COORDINATE_2, COORDINATE_3, LOCATION_NAME) VALUES (UNHEX(REPLACE(:locationID, '-', '')), :coordinate_1, :coordinate_2, :coordinate_3, :locationName)",
+                "INSERT INTO LOCATION (LOCATION_ID, COORDINATE_1, COORDINATE_2, LOCATION_NAME) VALUES (UNHEX(REPLACE(:locationID, '-', '')), :coordinate_1, :coordinate_2, :locationName)",
                 toParamMap(location));
         if (update != 1) {
             throw new RuntimeException("Nothing was inserted");
@@ -88,10 +87,10 @@ public class LocationRepository {
         return location;
     }
 
-    public Location update(UUID locationId, int coordinate_1, int coordinate_2, int coordinate_3, String locationName) {
+    public Location update(UUID locationId, int coordinate_1, int coordinate_2, String locationName) {
         Location location = readById(locationId);
         int update = namedJdbcTemplate.update(
-                "UPDATE LOCATION SET COORDINATE_1 = :coordinate_1, COORDINATE_2 = :coordinate_2, COORDINATE_3 = :coordinate_3, LOCATION_NAME = :locationName WHERE LOCATION_ID = UNHEX(REPLACE(:locationID, '-', ''))",
+                "UPDATE LOCATION SET COORDINATE_1 = :coordinate_1, COORDINATE_2 = :coordinate_2, LOCATION_NAME = :locationName WHERE LOCATION_ID = UNHEX(REPLACE(:locationID, '-', ''))",
                 toParamMap(location));
         if (update != 1) {
             throw new RuntimeException("Nothing was updated");

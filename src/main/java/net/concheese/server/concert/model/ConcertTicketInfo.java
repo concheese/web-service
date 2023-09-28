@@ -13,6 +13,9 @@ public class ConcertTicketInfo {
     private LocalTime startTime;
     private TicketingType type;
 
+    public ConcertTicketInfo() {
+    }
+
     public UUID getTicketingID() {
         return ticketingID;
     }
