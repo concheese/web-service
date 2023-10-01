@@ -11,7 +11,7 @@ import net.concheese.server.concert.model.Location;
  * @version 1.0
  * @since 2023-09-16
  */
-public record ConcertInfoRequest(String title, Genre genre, Location location, String artist,
+public record ConcertInfoRequest(String title, Genre genre, String location, String artist,
                                  ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing,
                                  ConcertDate concertDate, String description, String link) {
 
