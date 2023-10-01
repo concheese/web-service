@@ -13,6 +13,15 @@ public class ConcertDate {
     private LocalDate endDate;
     private LocalTime startTime;
 
+    public ConcertDate() {
+    }
+
+    public ConcertDate(UUID dateID, LocalDate startDate, LocalTime startTime) {
+        this.dateID = dateID;
+        this.startDate = startDate;
+        this.startTime = startTime;
+    }
+
     public ConcertDate(UUID dateID, LocalDate startDate, LocalDate endDate, LocalTime startTime) {
         this.dateID = dateID;
         this.startDate = startDate;

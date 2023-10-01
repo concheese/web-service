@@ -11,6 +11,8 @@ import java.util.*;
 
 import jakarta.annotation.PostConstruct;
 import net.concheese.server.concert.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -30,6 +32,7 @@ public class DefaultConcertRepository implements ConcertRepository {
   private static LocationRepository locationRepository;
   private static TicketingRepository ticketingRepository;
   private static ConcertDateRepository concertDateRepository;
+  private final Logger logger =  LoggerFactory.getLogger(DefaultConcertRepository.class.getName());
 
   public DefaultConcertRepository(NamedParameterJdbcTemplate namedJdbcTemplate, LocationRepository locationRepository, TicketingRepository ticketingRepository, ConcertDateRepository concertDateRepository) {
     this.namedJdbcTemplate = namedJdbcTemplate;
@@ -64,7 +67,7 @@ public class DefaultConcertRepository implements ConcertRepository {
     paramMap.put("artist", concertInfo.getArtist());
     paramMap.put("preTicketing", concertInfo.getPreTicketing().getTicketingID());
     paramMap.put("ticketing", concertInfo.getTicketing().getTicketingID());
-    paramMap.put("concertDate", concertInfo.getConcertDate().toString());
+    paramMap.put("concertDate", concertInfo.getConcertDate().getStartDate());
     paramMap.put("description", concertInfo.getDescription());
     paramMap.put("link", concertInfo.getLink());
     paramMap.put("created_at", LocalDateTime.now());
@@ -104,14 +107,18 @@ public class DefaultConcertRepository implements ConcertRepository {
 
   @Override
   public ConcertInfo insert(ConcertInfo concertInfo) {
+    logger.info(concertInfo.toString());
     int update = namedJdbcTemplate.update(
-                "INSERT INTO CONCERT(INFO_ID, TITLE, GENRE, LOCATION, ARTIST, PRE_TICKETING, TICKETING, CONCERT_DATE, DESCRIPTION, LINK, CREATED_AT, UPDATED_AT) VALUES(UNHEX(REPLACE(:infoId, '-', '')), :title, :genre, :location, :artist, :preTicketing, :ticketing, :concertDate, :description, :link, :created_at, :updated_at)",
+                "INSERT INTO CONCERT(INFO_ID, TITLE, GENRE, LOCATION, ARTIST, PRE_TICKETING, TICKETING, CONCERT_DATE, DESCRIPTION, LINK, CREATED_AT, UPDATED_AT)" +
+                    " VALUES(UNHEX(REPLACE(:infoId, '-', '')), :title, :genre, UNHEX(REPLACE(:location, '-', ''))," +
+                        " :artist, UNHEX(REPLACE(:preTicketing, '-', '')), UNHEX(REPLACE(:ticketing, '-', ''))," +
+                        " :concertDate, :description, :link, :created_at, :updated_at)",
                 toParamMap(concertInfo)); // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장하고, 그 Map을 update에 저장한 후 update를 실행한다.
     if (update != 1) {
       throw new RuntimeException("Nothing was inserted");
     }
-    locationRepository.insert(concertInfo.getLocation());           /** 필요할까요? **/
-    ticketingRepository.insert(concertInfo.getPreTicketing());  /** 필요할까요? **/
+    //locationRepository.insert(concertInfo.getLocation());           /** 필요할까요? **/
+    //ticketingRepository.insert(concertInfo.getPreTicketing());  /** 필요할까요? **/
     return concertInfo; // DB에 저장한 ConcertInfo를 반환한다.
   }
 

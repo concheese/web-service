@@ -43,7 +43,8 @@ public class PostServiceTest {
     @Test
     @Order(1)
     public void testCreateConcertInfo(){
-        concertInfo= new ConcertInfo(UUID.randomUUID(),postRequest.title(), postRequest.genre(), postRequest.location(),
+        Location location = new Location(UUID.randomUUID(),1,1,1,postRequest.location());
+        concertInfo= new ConcertInfo(UUID.randomUUID(),postRequest.title(), postRequest.genre(), location,
                 postRequest.artist(), postRequest.preTicketing(), postRequest.ticketing(),
                 postRequest.concertDate(), postRequest.description(), postRequest.link()
                 );
