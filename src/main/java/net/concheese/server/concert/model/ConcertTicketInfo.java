@@ -9,7 +9,7 @@ import java.util.UUID;
  */
 public class ConcertTicketInfo {
     private UUID ticketingID;
-    private LocalDate startDate;
+    private LocalDate startedAt;
     private LocalTime startTime;
     private TicketingType type;
 
@@ -24,12 +24,12 @@ public class ConcertTicketInfo {
         this.ticketingID = ticketingID;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getstartedAt() {
+        return startedAt;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setstartedAt(LocalDate startedAt) {
+        this.startedAt = startedAt;
     }
 
     public LocalTime getStartTime() {
@@ -48,16 +48,16 @@ public class ConcertTicketInfo {
         this.type = type;
     }
 
-    public ConcertTicketInfo(UUID ticketingID, LocalDate startDate, LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalTime startTime, TicketingType type) {
         this.ticketingID = ticketingID;
-        this.startDate = startDate;
+        this.startedAt = startedAt;
         this.startTime = startTime;
         this.type = type;
     }
 
-    public ConcertTicketInfo(LocalDate startDate,LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo(LocalDate startedAt,LocalTime startTime, TicketingType type) {
         this.ticketingID = UUID.randomUUID();
-        this.startDate = startDate;
+        this.startedAt = startedAt;
         this.startTime = startTime;
         this.type = type;
     }

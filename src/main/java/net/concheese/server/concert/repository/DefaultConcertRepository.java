@@ -117,8 +117,8 @@ public class DefaultConcertRepository implements ConcertRepository {
     if (update != 1) {
       throw new RuntimeException("Nothing was inserted");
     }
-    //locationRepository.insert(concertInfo.getLocation());           /** 필요할까요? **/
-    //ticketingRepository.insert(concertInfo.getPreTicketing());  /** 필요할까요? **/
+    locationRepository.insert(concertInfo.getLocation());           /** 필요할까요? **/
+    ticketingRepository.insert(concertInfo.getPreTicketing());  /** 필요할까요? **/
     return concertInfo; // DB에 저장한 ConcertInfo를 반환한다.
   }
 
@@ -132,8 +132,8 @@ public class DefaultConcertRepository implements ConcertRepository {
     UUID ticketingId = concertInfo.getTicketing().getTicketingID();
     /** 맞나? **/
     locationRepository.update(locationId, location.getCoordinate_1(),location.getCoordinate_2(), location.getLocationName());
-    ticketingRepository.update(concertTicketingId, preTicketing.getStartDate(), preTicketing.getStartTime(), preTicketing.getType());
-    ticketingRepository.update(ticketingId, ticketing.getStartDate(), ticketing.getStartTime(), ticketing.getType());
+    ticketingRepository.update(concertTicketingId, preTicketing.getstartedAt(), preTicketing.getStartTime(), preTicketing.getType());
+    ticketingRepository.update(ticketingId, ticketing.getstartedAt(), ticketing.getStartTime(), ticketing.getType());
     int update = namedJdbcTemplate.update(
             "UPDATE CONCERT SET TITLE = :title, GENRE = :genre, LOCATION = :locationID, ARTIST = :artist, PRE_TICKETING = :concertTicketingID, TICKETING = :ticketingID, CONCERT_DATE = :concertDate, DESCRIPTION = :description, LINK = :link, UPDATED_AT = :updated_at WHERE INFO_ID = UNHEX(REPLACE(:infoId, '-', ''))",
             toParamMap(concertInfo));

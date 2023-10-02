@@ -32,8 +32,8 @@ public class DefaultConcertInfoService implements ConcertInfoService {
       String description, String link) {
 
     Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
-    ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartDate(), preTicketing.getStartTime(),preTicketing.getType());
-    ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartDate(), preTicketing.getStartTime(),preTicketing.getType());
+    ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getstartedAt(), preTicketing.getStartTime(),preTicketing.getType());
+    ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getstartedAt(), preTicketing.getStartTime(),preTicketing.getType());
     ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getStartDate(),null, concertDate.getStartTime());
 
     ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location1, artist,
