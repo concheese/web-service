@@ -9,13 +9,22 @@ import java.util.UUID;
  */
 public class ConcertDate {
     private UUID dateID;
-    private LocalDate startDate;
+    private LocalDate startedAt;
     private LocalDate endDate;
     private LocalTime startTime;
 
-    public ConcertDate(UUID dateID, LocalDate startDate, LocalDate endDate, LocalTime startTime) {
+    public ConcertDate() {
+    }
+
+    public ConcertDate(UUID dateID, LocalDate startedAt, LocalTime startTime) {
         this.dateID = dateID;
-        this.startDate = startDate;
+        this.startedAt = startedAt;
+        this.startTime = startTime;
+    }
+
+    public ConcertDate(UUID dateID, LocalDate startedAt, LocalDate endDate, LocalTime startTime) {
+        this.dateID = dateID;
+        this.startedAt = startedAt;
         this.endDate = endDate;
         this.startTime = startTime;
     }
@@ -28,12 +37,12 @@ public class ConcertDate {
         this.dateID = dateID;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getstartedAt() {
+        return startedAt;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartDate(LocalDate startedAt) {
+        this.startedAt = startedAt;
     }
 
     public LocalDate getEndDate() {

@@ -11,7 +11,7 @@ import net.concheese.server.concert.model.Location;
  * @version 1.0
  * @since 2023-09-16
  */
-public record ConcertInfoRequest(String title, Genre genre, Location location,
+public record ConcertInfoRequest(String title, Genre genre, String location, String artist,
                                  ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing,
                                  ConcertDate concertDate, String description, String link) {
 
@@ -21,6 +21,7 @@ public record ConcertInfoRequest(String title, Genre genre, Location location,
    * @param title        콘서트 제목.
    * @param genre        콘서트 장르.
    * @param location     콘서트 장소.
+   * @param artist       콘서트 아티스트.
    * @param preTicketing 사전 티켓 정보.
    * @param ticketing    티켓 정보.
    * @param concertDate  콘서트 일자.
@@ -29,4 +30,5 @@ public record ConcertInfoRequest(String title, Genre genre, Location location,
    */
   public ConcertInfoRequest {
   }
+
 }

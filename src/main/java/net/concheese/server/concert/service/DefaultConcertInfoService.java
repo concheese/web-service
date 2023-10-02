@@ -27,19 +27,26 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public ConcertInfo createInfo(String title, Genre genre, Location location,
-      ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
+  public ConcertInfo createInfo(String title, Genre genre, String location, String artist,
+      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location,
-        concertTicketing, ticketing, concertDate, description, link);
+
+    Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
+    ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartedAt(), preTicketing.getStartedAt(),preTicketing.getStartTime(), preTicketing.getType());
+    ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),ticketing.getStartedAt(),ticketing.getStartedAt(), ticketing.getStartTime(), ticketing.getType());
+    ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getstartedAt(),null, concertDate.getStartTime());
+
+    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location1, artist,
+            preT, Ticket, concertDate1, description, link);
     return concertRepository.insert(concertInfo);
   }
 
   @Override
-  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, Location location,
+  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, String location, String artist,
       ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
-    return concertRepository.update(infoId, title, genre, location, concertTicketInfo, ticketing,
+    Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
+    return concertRepository.update(infoId, title, genre, location1, artist, concertTicketInfo, ticketing,
         concertDate, description, link);
   }
 

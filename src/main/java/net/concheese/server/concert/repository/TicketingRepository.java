@@ -40,20 +40,19 @@ public class TicketingRepository {
     private static ConcertTicketInfo mapPostRow(ResultSet resultSet, int rowNumber) throws SQLException {
         // DB에서 ConcertInfo의 각 필드에 대한 정보를 가져온다.
         UUID ticketingID = toUUID(resultSet.getBytes("TICKETING_ID"));
-        LocalDate startDate = resultSet.getDate("START_DATE").toLocalDate();
-        LocalDate endDate = resultSet.getDate("END_DATE").toLocalDate();
+        LocalDate startedAt = resultSet.getDate("START_DATE").toLocalDate();
         LocalTime startTime = resultSet.getTime("START_TIME").toLocalTime();
         TicketingType type = TicketingType.valueOf(resultSet.getString("TYPE"));
-        return new ConcertTicketInfo(ticketingID, startDate, endDate, startTime, type);
+        return new ConcertTicketInfo(ticketingID, startedAt, startTime, type);
     }
     private Map<String, Object> toParamMap(ConcertTicketInfo concertTicketInfo) {
         // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장한다.
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ticketingID", concertTicketInfo.getTicketingID().toString().getBytes());
-        paramMap.put("startDate", concertTicketInfo.getStartDate());
-        paramMap.put("endDate", concertTicketInfo.getEndDate());
+        paramMap.put("startedAt", concertTicketInfo.getStartedAt());
+        paramMap.put("endAt", concertTicketInfo.getEndAt());
         paramMap.put("startTime", concertTicketInfo.getStartTime());
-        paramMap.put("type", concertTicketInfo.getType());
+        paramMap.put("type", concertTicketInfo.getType().toString());
         return paramMap;
     }
     @PostConstruct
@@ -85,7 +84,7 @@ public class TicketingRepository {
 
     public ConcertTicketInfo insert(ConcertTicketInfo concertTicketInfo) {
         int update = namedJdbcTemplate.update(
-                "INSERT INTO TICKETING (TICKETING_ID, START_DATE, END_DATE, START_TIME, TYPE) VALUES (UNHEX(REPLACE(:ticketingID, '-', '')), :startDate, :endDate, :startTime, :type)",
+                "INSERT INTO TICKETING (TICKETING_ID, START_DATE, END_DATE, START_TIME, TYPE) VALUES (UNHEX(REPLACE(:ticketingID, '-', '')), :startedAt, :endAt, :startTime, :type)",
                 toParamMap(concertTicketInfo));
         if (update != 1) {
             throw new RuntimeException("Nothing was inserted");
@@ -93,10 +92,10 @@ public class TicketingRepository {
         return concertTicketInfo;
     }
 
-    public ConcertTicketInfo update(java.util.UUID ticketingID, LocalDate startDate, LocalDate endDate, LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo update(java.util.UUID ticketingID, LocalDate startedAt,  LocalTime startTime, TicketingType type) {
         ConcertTicketInfo concertTicketInfo = readById(ticketingID);
         int update = namedJdbcTemplate.update(
-                "UPDATE TICKETING SET START_DATE = :startDate, END_DATE = :endDate, START_TIME = :startTime, TYPE = :type WHERE TICKETING_ID = UNHEX(REPLACE(:ticketingID, '-', ''))",
+                "UPDATE TICKETING SET START_DATE = :startedAt, START_TIME = :startTime, TYPE = :type WHERE TICKETING_ID = UNHEX(REPLACE(:ticketingID, '-', ''))",
                 toParamMap(concertTicketInfo));
         if (update != 1) {
             throw new RuntimeException("Nothing was updated");

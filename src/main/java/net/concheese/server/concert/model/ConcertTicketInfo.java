@@ -9,10 +9,29 @@ import java.util.UUID;
  */
 public class ConcertTicketInfo {
     private UUID ticketingID;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate startedAt;
+    private LocalDate endAt;
     private LocalTime startTime;
     private TicketingType type;
+
+    public ConcertTicketInfo() {
+    }
+
+    public LocalDate getEndAt() {
+        return endAt;
+    }
+
+    public LocalDate getStartedAt() {
+        return startedAt;
+    }
+
+    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalDate endAt, LocalTime startTime, TicketingType type) {
+        this.ticketingID = ticketingID;
+        this.startedAt = startedAt;
+        this.endAt = endAt;
+        this.startTime = startTime;
+        this.type = type;
+    }
 
     public UUID getTicketingID() {
         return ticketingID;
@@ -22,20 +41,8 @@ public class ConcertTicketInfo {
         this.ticketingID = ticketingID;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setstartedAt(LocalDate startedAt) {
+        this.startedAt = startedAt;
     }
 
     public LocalTime getStartTime() {
@@ -54,10 +61,16 @@ public class ConcertTicketInfo {
         this.type = type;
     }
 
-    public ConcertTicketInfo(UUID ticketingID, LocalDate startDate, LocalDate endDate, LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalTime startTime, TicketingType type) {
         this.ticketingID = ticketingID;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startedAt = startedAt;
+        this.startTime = startTime;
+        this.type = type;
+    }
+
+    public ConcertTicketInfo(LocalDate startedAt,LocalTime startTime, TicketingType type) {
+        this.ticketingID = UUID.randomUUID();
+        this.startedAt = startedAt;
         this.startTime = startTime;
         this.type = type;
     }

@@ -22,15 +22,15 @@ public interface ConcertInfoService {
    * @param title            콘서트의 제목.
    * @param genre            콘서트의 장르.
    * @param location         콘서트의 장소.
-   * @param concertTicketing 콘서트 티켓 정보.
+   * @param preTicketing 콘서트 티켓 정보.
    * @param ticketing        콘서트 티켓 정보.
    * @param concertDate      콘서트 날짜.
    * @param description      콘서트에 대한 설명.
    * @param link             콘서트와 관련된 링크.
    * @return 생성된 {@link ConcertInfo}.
    */
-  ConcertInfo createInfo(String title, Genre genre, Location location,
-      ConcertTicketInfo concertTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
+  ConcertInfo createInfo(String title, Genre genre, String location, String artist,
+      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link);
 
   /**
@@ -47,7 +47,7 @@ public interface ConcertInfoService {
    * @param link              콘서트와 관련된 업데이트된 링크.
    * @return 업데이트된 {@link ConcertInfo}.
    */
-  ConcertInfo updateInfo(UUID infoId, String title, Genre genre, Location location,
+  ConcertInfo updateInfo(UUID infoId, String title, Genre genre, String location, String artist,
       ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link);
 

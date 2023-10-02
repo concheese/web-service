@@ -4,7 +4,8 @@ package net.concheese.server.concert.model;
  * {@code Genre} 열거형은 콘서트 장르를 정의합니다.
  */
 public enum Genre {
-    IDOL("아이돌");
+    IDOL("아이돌"),
+    DRAMA("연극");
 
     private final String description;
 

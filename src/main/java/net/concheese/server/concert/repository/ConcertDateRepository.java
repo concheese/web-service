@@ -50,7 +50,7 @@ public class ConcertDateRepository {
         // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장한다.
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ticketingID", concertDate.getDateID().toString().getBytes());
-        paramMap.put("startDate", concertDate.getStartDate());
+        paramMap.put("startedAt", concertDate.getstartedAt());
         paramMap.put("endDate", concertDate.getEndDate());
         paramMap.put("startTime", concertDate.getStartTime());
         return paramMap;
