@@ -67,7 +67,7 @@ public class DefaultConcertRepository implements ConcertRepository {
     paramMap.put("artist", concertInfo.getArtist());
     paramMap.put("preTicketing", concertInfo.getPreTicketing().getTicketingID());
     paramMap.put("ticketing", concertInfo.getTicketing().getTicketingID());
-    paramMap.put("concertDate", concertInfo.getConcertDate().getStartDate());
+    paramMap.put("concertDate", concertInfo.getConcertDate().getstartedAt());
     paramMap.put("description", concertInfo.getDescription());
     paramMap.put("link", concertInfo.getLink());
     paramMap.put("created_at", LocalDateTime.now());
@@ -132,8 +132,8 @@ public class DefaultConcertRepository implements ConcertRepository {
     UUID ticketingId = concertInfo.getTicketing().getTicketingID();
     /** 맞나? **/
     locationRepository.update(locationId, location.getCoordinate_1(),location.getCoordinate_2(), location.getLocationName());
-    ticketingRepository.update(concertTicketingId, preTicketing.getstartedAt(), preTicketing.getStartTime(), preTicketing.getType());
-    ticketingRepository.update(ticketingId, ticketing.getstartedAt(), ticketing.getStartTime(), ticketing.getType());
+    ticketingRepository.update(concertTicketingId, preTicketing.getStartedAt(), preTicketing.getStartTime(), preTicketing.getType());
+    ticketingRepository.update(ticketingId, ticketing.getStartedAt(), ticketing.getStartTime(), ticketing.getType());
     int update = namedJdbcTemplate.update(
             "UPDATE CONCERT SET TITLE = :title, GENRE = :genre, LOCATION = :locationID, ARTIST = :artist, PRE_TICKETING = :concertTicketingID, TICKETING = :ticketingID, CONCERT_DATE = :concertDate, DESCRIPTION = :description, LINK = :link, UPDATED_AT = :updated_at WHERE INFO_ID = UNHEX(REPLACE(:infoId, '-', ''))",
             toParamMap(concertInfo));

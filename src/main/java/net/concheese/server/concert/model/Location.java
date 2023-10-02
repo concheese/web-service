@@ -27,6 +27,9 @@ public class Location {
     public int getCoordinate_2() {
         return coordinate_2;
     }
+    public int getCoordinate_3() {
+        return coordinate_3;
+    }
 
     public void setCoordinate_1(int coordinate_1) {
         this.coordinate_1 = coordinate_1;
@@ -42,10 +45,6 @@ public class Location {
 
     public void setCoordinate_3(int coordinate_3) {
         this.coordinate_3 = coordinate_3;
-    }
-
-    public int getCoordinate_3() {
-        return coordinate_3;
     }
 
     public String getLocationName() {

@@ -10,10 +10,27 @@ import java.util.UUID;
 public class ConcertTicketInfo {
     private UUID ticketingID;
     private LocalDate startedAt;
+    private LocalDate endAt;
     private LocalTime startTime;
     private TicketingType type;
 
     public ConcertTicketInfo() {
+    }
+
+    public LocalDate getEndAt() {
+        return endAt;
+    }
+
+    public LocalDate getStartedAt() {
+        return startedAt;
+    }
+
+    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalDate endAt, LocalTime startTime, TicketingType type) {
+        this.ticketingID = ticketingID;
+        this.startedAt = startedAt;
+        this.endAt = endAt;
+        this.startTime = startTime;
+        this.type = type;
     }
 
     public UUID getTicketingID() {
@@ -22,10 +39,6 @@ public class ConcertTicketInfo {
 
     public void setTicketingID(UUID ticketingID) {
         this.ticketingID = ticketingID;
-    }
-
-    public LocalDate getstartedAt() {
-        return startedAt;
     }
 
     public void setstartedAt(LocalDate startedAt) {

@@ -81,7 +81,7 @@ public class LocationRepository {
 
     public Location insert(Location location) {
         int update = namedJdbcTemplate.update(
-                "INSERT INTO LOCATION (LOCATION_ID, COORDINATE_1, COORDINATE_2,COORDINATE_3, LOCATION_NAME) VALUES (UNHEX(REPLACE(:locationID, '-', '')), :coordinate_1, :coordinate_2,coordinate_3, :locationName)",
+                "INSERT INTO LOCATION (LOCATION_ID, COORDINATE_1, COORDINATE_2,COORDINATE_3, LOCATION_NAME) VALUES (UNHEX(REPLACE(:locationID, '-', '')), :coordinate_1, :coordinate_2, :coordinate_3, :locationName)",
                 toParamMap(location));
         if (update != 1) {
             throw new RuntimeException("Nothing was inserted");
