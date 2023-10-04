@@ -30,11 +30,26 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   public ConcertInfo createInfo(String title, Genre genre, String location, String artist,
       ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
       String description, String link) {
+    int[] locInt= {0,0,0};
+    String[] loc = location.split("/");
+    if(loc.length == 1)locInt[0] = Integer.parseInt(loc[0]);
+    if(loc.length == 2) {
+      locInt[0] = Integer.parseInt(loc[0]);
+      locInt[1] = Integer.parseInt(loc[1]);
+    }
+    if(loc.length == 3) {
+      locInt[0] = Integer.parseInt(loc[0]);
+      locInt[1] = Integer.parseInt(loc[1]);
+      locInt[2] = Integer.parseInt(loc[2]);
+    }
 
-    Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
+
+
+    Location location1 = new Location(UUID.randomUUID(),locInt[0],locInt[1],locInt[2],"Temp name");
+
     ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartedAt(), preTicketing.getStartedAt(),preTicketing.getStartTime(), preTicketing.getType());
     ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),ticketing.getStartedAt(),ticketing.getStartedAt(), ticketing.getStartTime(), ticketing.getType());
-    ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getstartedAt(),null, concertDate.getStartTime());
+    ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getstartedAt(),concertDate.getstartedAt(), concertDate.getStartTime());
 
     ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location1, artist,
             preT, Ticket, concertDate1, description, link);
