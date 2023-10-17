@@ -25,29 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PostServiceTest {
-    private final ConcertInfoRequest postRequest = new ConcertInfoRequest("Test Concert", Genre.IDOL,
-            //new Location(UUID.randomUUID(),1,2,"local"),
-            null,
-            "Rho",
-            null,
-            new ConcertTicketInfo(UUID.randomUUID(), LocalDate.now(), LocalTime.now(), TicketingType.GENERAL_SALE),
-            new ConcertDate(UUID.randomUUID(), null,null,null),
-            "test description",
-            "test link"
-            );
     private ConcertInfo concertInfo;
 
-    @Autowired
-    private DefaultConcertInfoService defaultConcertInfoService;
-
-    @Test
-    @Order(1)
-    public void testCreateConcertInfo(){
-        Location location = new Location(UUID.randomUUID(),1,1,1,postRequest.location());
-        concertInfo= new ConcertInfo(UUID.randomUUID(),postRequest.title(), postRequest.genre(), location,
-                postRequest.artist(), postRequest.preTicketing(), postRequest.ticketing(),
-                postRequest.concertDate(), postRequest.description(), postRequest.link()
-                );
-        assertNotNull(concertInfo);
-    }
 }

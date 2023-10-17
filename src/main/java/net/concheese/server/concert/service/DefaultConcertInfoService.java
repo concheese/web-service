@@ -3,11 +3,8 @@ package net.concheese.server.concert.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import net.concheese.server.concert.model.ConcertDate;
-import net.concheese.server.concert.model.ConcertInfo;
-import net.concheese.server.concert.model.ConcertTicketInfo;
-import net.concheese.server.concert.model.Genre;
-import net.concheese.server.concert.model.Location;
+
+import net.concheese.server.concert.model.*;
 import net.concheese.server.concert.repository.DefaultConcertRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,42 +24,17 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public ConcertInfo createInfo(String title, Genre genre, String location, String artist,
-      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link) {
-    int[] locInt= {0,0,0};
-    String[] loc = location.split("/");
-    if(loc.length == 1)locInt[0] = Integer.parseInt(loc[0]);
-    if(loc.length == 2) {
-      locInt[0] = Integer.parseInt(loc[0]);
-      locInt[1] = Integer.parseInt(loc[1]);
-    }
-    if(loc.length == 3) {
-      locInt[0] = Integer.parseInt(loc[0]);
-      locInt[1] = Integer.parseInt(loc[1]);
-      locInt[2] = Integer.parseInt(loc[2]);
-    }
+  public ConcertInfo createInfo(String title, Genre genre, List<String> performers, Schedules schedules,
+                                List<ConcertTicketInfo> ticketing, String description, String link) {
 
-
-
-    Location location1 = new Location(UUID.randomUUID(),locInt[0],locInt[1],locInt[2],"Temp name");
-
-    ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartedAt(), preTicketing.getStartedAt(),preTicketing.getStartTime(), preTicketing.getType());
-    ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),ticketing.getStartedAt(),ticketing.getStartedAt(), ticketing.getStartTime(), ticketing.getType());
-    ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getstartedAt(),concertDate.getstartedAt(), concertDate.getStartTime());
-
-    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location1, artist,
-            preT, Ticket, concertDate1, description, link);
+    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, performers, schedules,ticketing, description, link);
     return concertRepository.insert(concertInfo);
   }
 
   @Override
-  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, String location, String artist,
-      ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link) {
-    Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
-    return concertRepository.update(infoId, title, genre, location1, artist, concertTicketInfo, ticketing,
-        concertDate, description, link);
+  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, List<String> performers, Schedules schedules,
+                                List<ConcertTicketInfo> ticketing, String description, String link) {
+    return concertRepository.update(infoId, title, genre, performers, schedules,ticketing, description, link);
   }
 
   @Override

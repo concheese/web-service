@@ -40,19 +40,18 @@ public class TicketingRepository {
     private static ConcertTicketInfo mapPostRow(ResultSet resultSet, int rowNumber) throws SQLException {
         // DB에서 ConcertInfo의 각 필드에 대한 정보를 가져온다.
         UUID ticketingID = toUUID(resultSet.getBytes("TICKETING_ID"));
-        LocalDate startedAt = resultSet.getDate("START_DATE").toLocalDate();
-        LocalTime startTime = resultSet.getTime("START_TIME").toLocalTime();
+        LocalDate start = resultSet.getDate("START").toLocalDate();
+        LocalDate end = resultSet.getDate("END").toLocalDate();
         TicketingType type = TicketingType.valueOf(resultSet.getString("TYPE"));
-        return new ConcertTicketInfo(ticketingID, startedAt, startTime, type);
+        return new ConcertTicketInfo(ticketingID, start, end, type);
     }
     private Map<String, Object> toParamMap(ConcertTicketInfo concertTicketInfo) {
         // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장한다.
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ticketingID", concertTicketInfo.getTicketingID().toString().getBytes());
-        paramMap.put("startedAt", concertTicketInfo.getStartedAt());
-        paramMap.put("endAt", concertTicketInfo.getEndAt());
-        paramMap.put("startTime", concertTicketInfo.getStartTime());
-        paramMap.put("type", concertTicketInfo.getType().toString());
+        paramMap.put("start", concertTicketInfo.getStart());
+        paramMap.put("end", concertTicketInfo.getEnd());
+        paramMap.put("status", concertTicketInfo.getStatus().toString());
         return paramMap;
     }
     @PostConstruct

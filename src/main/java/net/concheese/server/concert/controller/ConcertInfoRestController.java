@@ -40,8 +40,7 @@ public class ConcertInfoRestController {
   @PostMapping("/info")
   public ResponseEntity<ConcertInfo> createInfo(@RequestBody ConcertInfoRequest request) {
     return ResponseEntity.ok(
-        concertInfoService.createInfo(request.title(), request.genre(), request.location(), request.artist(),
-            request.preTicketing(), request.ticketing(), request.concertDate(),
+        concertInfoService.createInfo(request.title(), request.genre(),request.performers(),request.schedules(),  request.ticketing(),
             request.description(), request.link()));
   }
 
@@ -61,9 +60,8 @@ public class ConcertInfoRestController {
   public ResponseEntity<ConcertInfo> updateInfo(@RequestBody ConcertInfoRequest request,
       @PathVariable String infoId) {
     return ResponseEntity.ok(
-        concertInfoService.updateInfo(UUID.fromString(infoId), request.title(), request.genre(),
-            request.location(), request.artist(), request.preTicketing(), request.ticketing(), request.concertDate(),
-            request.description(), request.link()));
+        concertInfoService.updateInfo(UUID.fromString(infoId), request.title(), request.genre(),request.performers(),request.schedules(),  request.ticketing(),
+                request.description(), request.link()));
   }
 
   /**

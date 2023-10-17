@@ -9,69 +9,49 @@ import java.util.UUID;
  */
 public class ConcertTicketInfo {
     private UUID ticketingID;
-    private LocalDate startedAt;
-    private LocalDate endAt;
-    private LocalTime startTime;
-    private TicketingType type;
+    private LocalDate start;
+    private LocalDate end;
+    private TicketingType status;
 
     public ConcertTicketInfo() {
     }
 
-    public LocalDate getEndAt() {
-        return endAt;
-    }
-
-    public LocalDate getStartedAt() {
-        return startedAt;
-    }
-
-    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalDate endAt, LocalTime startTime, TicketingType type) {
+    public ConcertTicketInfo(UUID ticketingID, LocalDate start, LocalDate end, TicketingType status) {
         this.ticketingID = ticketingID;
-        this.startedAt = startedAt;
-        this.endAt = endAt;
-        this.startTime = startTime;
-        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.status = status;
     }
+
 
     public UUID getTicketingID() {
         return ticketingID;
     }
-
     public void setTicketingID(UUID ticketingID) {
         this.ticketingID = ticketingID;
     }
 
-    public void setstartedAt(LocalDate startedAt) {
-        this.startedAt = startedAt;
+    public LocalDate getStart() {
+        return start;
     }
 
-    public LocalTime getStartTime() {
-        return startTime;
+    public LocalDate getEnd() {
+        return end;
     }
 
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
+    public TicketingType getStatus() {
+        return status;
     }
 
-    public TicketingType getType() {
-        return type;
+    public void setStart(LocalDate start) {
+        this.start = start;
     }
 
-    public void setType(TicketingType type) {
-        this.type = type;
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
-    public ConcertTicketInfo(UUID ticketingID, LocalDate startedAt, LocalTime startTime, TicketingType type) {
-        this.ticketingID = ticketingID;
-        this.startedAt = startedAt;
-        this.startTime = startTime;
-        this.type = type;
-    }
-
-    public ConcertTicketInfo(LocalDate startedAt,LocalTime startTime, TicketingType type) {
-        this.ticketingID = UUID.randomUUID();
-        this.startedAt = startedAt;
-        this.startTime = startTime;
-        this.type = type;
+    public void setStatus(TicketingType status) {
+        this.status = status;
     }
 }

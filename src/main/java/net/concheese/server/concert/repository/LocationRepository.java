@@ -42,14 +42,9 @@ public class LocationRepository {
         String locationName = resultSet.getString("LOCATION_NAME");
         return new Location(locationID, coordinate_1, coordinate_2, coordinate_3, locationName);
     }
-    private Map<String, Object> toParamMap(Location location) {
+    private Map<String, Object> toParamMap(List<String> location) {
         // DB에 저장하기 위해 ConcertInfo의 각 필드를 Map에 저장한다.
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("locationID", location.getLocationID().toString().getBytes());
-        paramMap.put("coordinate_1", location.getCoordinate_1());
-        paramMap.put("coordinate_2", location.getCoordinate_2());
-        paramMap.put("coordinate_3", location.getCoordinate_3());
-        paramMap.put("locationName", location.getLocationName());
         return paramMap;
     }
     @PostConstruct
@@ -79,7 +74,7 @@ public class LocationRepository {
         }
     }
 
-    public Location insert(Location location) {
+    public List<String> insert(List<String> location) {
         int update = namedJdbcTemplate.update(
                 "INSERT INTO LOCATION (LOCATION_ID, COORDINATE_1, COORDINATE_2,COORDINATE_3, LOCATION_NAME) VALUES (UNHEX(REPLACE(:locationID, '-', '')), :coordinate_1, :coordinate_2, :coordinate_3, :locationName)",
                 toParamMap(location));
@@ -89,8 +84,8 @@ public class LocationRepository {
         return location;
     }
 
-    public Location update(UUID locationId, int coordinate_1, int coordinate_2, String locationName) {
-        Location location = readById(locationId);
+    public List<String> update(UUID locationId, int coordinate_1, int coordinate_2, String locationName) {
+        List<String> location = readById(locationId);
         int update = namedJdbcTemplate.update(
                 "UPDATE LOCATION SET COORDINATE_1 = :coordinate_1, COORDINATE_2 = :coordinate_2, LOCATION_NAME = :locationName WHERE LOCATION_ID = UNHEX(REPLACE(:locationID, '-', ''))",
                 toParamMap(location));
@@ -100,10 +95,11 @@ public class LocationRepository {
         return location;
     }
 
-    public Location readById(UUID locationId) {
-        return namedJdbcTemplate.queryForObject(
-                "SELECT * FROM LOCATION WHERE LOCATION_ID = UNHEX(REPLACE(:locationID, '-', ''))",
-                Collections.singletonMap("locationID", locationId.toString().getBytes()), infoRowMapper);
+    public List<String> readById(UUID locationId) {
+        return null;
+//        return namedJdbcTemplate.queryForObject(
+//                "SELECT * FROM LOCATION WHERE LOCATION_ID = UNHEX(REPLACE(:locationID, '-', ''))",
+//                Collections.singletonMap("locationID", locationId.toString().getBytes()), infoRowMapper);
     }
 
     public List<Location> readAll() {
