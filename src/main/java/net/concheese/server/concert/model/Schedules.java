@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Schedules {
     private UUID ScheduleID;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd [HH:mm:ss][.SSS][.SS][.S]")
     private LocalDate timestamp;
     private int postal;
 
