@@ -1,6 +1,5 @@
 package net.concheese.server.concert.controller;
 
-import net.concheese.server.concert.model.ConcertDate;
 import net.concheese.server.concert.model.ConcertTicketInfo;
 import net.concheese.server.concert.model.Genre;
 import net.concheese.server.concert.model.Schedules;
@@ -13,7 +12,7 @@ import java.util.List;
  * @version 1.0
  * @since 2023-09-16
  */
-public record ConcertInfoRequest(String title, Genre genre, List<String> performers, Schedules schedules,
+public record ConcertInfoRequest(String title, Genre genre, List<String> performers, List<Schedules> schedules,
                                  List<ConcertTicketInfo> ticketing, String description, String link) {
 
   /**
@@ -22,6 +21,7 @@ public record ConcertInfoRequest(String title, Genre genre, List<String> perform
    * @param title        콘서트 제목.
    * @param genre        콘서트 장르.
    * @param performers   콘서트 공연자 정보.
+   * @param schedules    콘서트 일정.
    * @param ticketing    티켓 정보.
    * @param description  콘서트 설명.
    * @param link         콘서트 관련 링크.
