@@ -1,5 +1,7 @@
 package net.concheese.server.concert.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -9,11 +11,19 @@ import java.util.UUID;
  */
 public class ConcertTicketInfo {
     private UUID ticketingID;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
     private LocalDate start;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]")
     private LocalDate end;
     private TicketingType status;
 
     public ConcertTicketInfo() {
+    }
+
+    public ConcertTicketInfo(LocalDate start, LocalDate end, TicketingType status) {
+        this.start = start;
+        this.end = end;
+        this.status = status;
     }
 
     public ConcertTicketInfo(UUID ticketingID, LocalDate start, LocalDate end, TicketingType status) {

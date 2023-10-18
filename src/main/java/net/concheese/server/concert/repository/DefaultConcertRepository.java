@@ -29,29 +29,25 @@ public class DefaultConcertRepository implements ConcertRepository {
   private static final RowMapper<ConcertInfo> infoRowMapper = DefaultConcertRepository::mapPostRow;
   private final NamedParameterJdbcTemplate namedJdbcTemplate;
   private final JdbcTemplate jdbcTemplate;
-  private static LocationRepository locationRepository;
   private static TicketingRepository ticketingRepository;
-  private static ConcertDateRepository concertDateRepository;
   private final Logger logger =  LoggerFactory.getLogger(DefaultConcertRepository.class.getName());
 
-  public DefaultConcertRepository(NamedParameterJdbcTemplate namedJdbcTemplate, LocationRepository locationRepository, TicketingRepository ticketingRepository, ConcertDateRepository concertDateRepository) {
+  public DefaultConcertRepository(NamedParameterJdbcTemplate namedJdbcTemplate, TicketingRepository ticketingRepository) {
     this.namedJdbcTemplate = namedJdbcTemplate;
     this.jdbcTemplate = new JdbcTemplate(
             Objects.requireNonNull(this.namedJdbcTemplate.getJdbcTemplate().getDataSource()));
-    this.locationRepository = locationRepository;
     this.ticketingRepository = ticketingRepository;
-    this.concertDateRepository = concertDateRepository;
   }
 
   private static ConcertInfo mapPostRow(ResultSet resultSet, int rowNumber) throws SQLException {
     UUID infoId = toUUID(resultSet.getBytes("INFO_ID"));
     String title = resultSet.getString("TITLE");
     Genre genre = Genre.valueOf(resultSet.getString("GENRE")); // Genre.valueOf()는 String을 Genre로 변환해준다.resultSet.getString("GENRE")는 DB에서 가져온 String을 반환한다.
-    List<String> location = locationRepository.readById(toUUID(resultSet.getBytes("LOCATION_ID")));// id로 콘서트 정보를 읽어옵니다. 없을 때에 대해 예외처리 필요
+
     String artist = resultSet.getString("ARTIST");
     ConcertTicketInfo concertTicketing = ticketingRepository.readById(toUUID(resultSet.getBytes("PRE_TICKETING")));
     ConcertTicketInfo ticketing = ticketingRepository.readById(toUUID(resultSet.getBytes("TICKETING")));
-    ConcertDate concertDate = concertDateRepository.readById(toUUID(resultSet.getBytes("CONCERT_DATE")));
+
     String description = resultSet.getString("DESCRIPTION");
     String link = resultSet.getString("LINK");
     return null;// todo: 복원해야함 new ConcertInfo(infoId, title, genre, location, artist, concertTicketing, ticketing, concertDate, description, link);
@@ -80,7 +76,6 @@ public class DefaultConcertRepository implements ConcertRepository {
     if (!isConcertTableExist()) {
       createConcertTable();
     }
-    locationRepository.initializeDatabaseSchema();  // 필요할까요?
     ticketingRepository.initializeDatabaseSchema(); // 필요할까요?
   }
 
@@ -124,7 +119,7 @@ public class DefaultConcertRepository implements ConcertRepository {
   }
 
   @Override
-  public ConcertInfo update(UUID infoId, String title, Genre genre, List<String> performers, Schedules schedules,
+  public ConcertInfo update(UUID infoId, String title, Genre genre, List<String> performers, List<Schedules> schedules,
                             List<ConcertTicketInfo> ticketing, String description, String link) {
     ConcertInfo concertInfo = readById(infoId);
     //todo : SQL 수정없는상태

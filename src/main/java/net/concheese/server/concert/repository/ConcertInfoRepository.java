@@ -14,7 +14,7 @@ public class ConcertInfoRepository implements ConcertRepository{
     }
 
     @Override
-    public ConcertInfo update(UUID infoId, String title, Genre genre, List<String> performers, Schedules schedules, List<ConcertTicketInfo> ticketing, String description, String link) {
+    public ConcertInfo update(UUID infoId, String title, Genre genre, List<String> performers, List<Schedules> schedules, List<ConcertTicketInfo> ticketing, String description, String link) {
         return null;
     }
 

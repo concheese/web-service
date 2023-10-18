@@ -24,7 +24,7 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public ConcertInfo createInfo(String title, Genre genre, List<String> performers, Schedules schedules,
+  public ConcertInfo createInfo(String title, Genre genre, List<String> performers, List<Schedules> schedules,
                                 List<ConcertTicketInfo> ticketing, String description, String link) {
 
     ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, performers, schedules,ticketing, description, link);
@@ -32,7 +32,7 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   }
 
   @Override
-  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, List<String> performers, Schedules schedules,
+  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, List<String> performers, List<Schedules> schedules,
                                 List<ConcertTicketInfo> ticketing, String description, String link) {
     return concertRepository.update(infoId, title, genre, performers, schedules,ticketing, description, link);
   }
