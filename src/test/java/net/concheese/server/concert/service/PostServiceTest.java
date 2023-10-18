@@ -12,6 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PostServiceTest {
-    private ConcertInfo concertInfo;
+    private Concert concert;
 
 }

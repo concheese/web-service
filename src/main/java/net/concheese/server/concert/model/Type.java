@@ -3,7 +3,7 @@ package net.concheese.server.concert.model;
 /**
  * {@code Genre} 열거형은 콘서트 장르를 정의합니다.
  */
-public enum Genre {
+public enum Type {
     CONCERT("콘서트"),
     ORCHESTRA("오케스트라"),
     FESTIVAL("축제"),
@@ -13,7 +13,7 @@ public enum Genre {
 
     private final String description;
 
-    Genre(String description) {
+    Type(String description) {
         this.description = description;
     }
 
