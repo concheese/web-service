@@ -1,9 +1,11 @@
 package net.concheese.server.concert.repository;
 
-import net.concheese.server.concert.model.TicketingTable;
+import net.concheese.server.concert.model.Ticketing;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.UUID;
 
-public interface TicketingRepository extends JpaRepository<TicketingTable, UUID> {
+@EnableJpaRepositories
+public interface TicketingRepository extends JpaRepository<Ticketing, Long> {
 }

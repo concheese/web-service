@@ -4,17 +4,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 @Entity
-@Table(name="schedules")
-public class Schedule implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name="performers_concerts")
+public class PerformerConcert {
+    @Getter @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Getter @Setter
-    private Timestamp timestamp;
+    @ManyToOne
+    @JoinColumn(name="performer_id")
+    private Performer performer;
+
     @Getter @Setter
-    private int postal;
     @ManyToOne
     @JoinColumn(name="concert_id")
     private Concert concert;

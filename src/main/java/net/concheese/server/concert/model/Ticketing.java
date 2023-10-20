@@ -1,26 +1,27 @@
 package net.concheese.server.concert.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name="ticketings")
 public class Ticketing {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @ManyToOne
+    @JoinColumn(name="concert_id")
+    private Concert concert;
+
     @Getter @Setter
-    private Timestamp start;
+    private LocalDateTime start;
     @Getter @Setter
-    private Timestamp end;
+    private LocalDateTime end;
     @Getter @Setter
     private TicketingType status;
-
-    public Ticketing(Timestamp start, Timestamp end, TicketingType status) {
-        this.start = start;
-        this.end = end;
-        this.status = status;
-    }
-
 }

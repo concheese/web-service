@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import net.concheese.server.concert.model.Concert;
+import net.concheese.server.concert.model.Performer;
 import net.concheese.server.concert.model.Type;
 import net.concheese.server.concert.service.ConcertInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/v1/concert")
 @RequiredArgsConstructor
 public class ConcertInfoRestController {
-
+  @Autowired
   private final ConcertInfoService concertInfoService;
 
   /**
@@ -32,7 +34,7 @@ public class ConcertInfoRestController {
   @PostMapping("/info")
   public ResponseEntity<Concert> createInfo(@RequestBody ConcertInfoRequest request) {
     return ResponseEntity.ok(
-        concertInfoService.createInfo(request.title(), request.type(),request.performers(),request.schedule(),  request.ticketing(),
+        concertInfoService.createInfo(request.title(), request.type(), request.performers(), request.schedule(), request.ticketing(),
             request.description(), request.link()));
   }
 
@@ -42,53 +44,63 @@ public class ConcertInfoRestController {
   }
 
 
-//  /**
-//   * 콘서트 정보를 업데이트합니다.
-//   *
-//   * @param request 콘서트 정보 업데이트를 위한 요청 데이터.
-//   * @param infoId  업데이트할 콘서트 정보의 식별자.
-//   * @return 업데이트된 콘서트 정보를 담은 ResponseEntity.
-//   */
-//  @PutMapping("/info/{infoId}")
-//  public ResponseEntity<Concert> updateInfo(@RequestBody ConcertInfoRequest request,
-//                                            @PathVariable String infoId) {
-//    return ResponseEntity.ok(
-//        concertInfoService.updateInfo(UUID.fromString(infoId), request.title(), request.type(),request.performers(),request.schedules(),  request.ticketing(),
-//                request.description(), request.link()));
-//  }
-//
-//  /**
-//   * 특정 콘서트 정보를 조회합니다.
-//   *
-//   * @param infoId 조회할 콘서트 정보의 식별자.
-//   * @return 조회된 콘서트 정보를 담은 ResponseEntity.
-//   */
-//  @GetMapping("/info/{infoId}")
-//  public ResponseEntity<Concert> readInfo(@PathVariable String infoId) {
-//    return ResponseEntity.ok(concertInfoService.readInfo(UUID.fromString(infoId)));
-//  }
-//
-//  /**
-//   * 콘서트 정보 목록을 조회합니다.
-//   *
-//   * @param genre 필터링할 콘서트 장르 (옵션).
-//   * @return 조회된 콘서트 정보 목록을 담은 ResponseEntity.
-//   */
-//  @GetMapping("/infoList")
-//  public ResponseEntity<List<Concert>> readInfoList(@RequestParam Optional<Type> genre) {
-//    return ResponseEntity.ok(
-//        genre.map(concertInfoService::readInfoList).orElse(concertInfoService.readAllInfo()));
-//  }
-//
-//  /**
-//   * 콘서트 정보를 삭제합니다.
-//   *
-//   * @param infoId 삭제할 콘서트 정보의 식별자.
-//   * @return 삭제 성공 여부를 나타내는 ResponseEntity.
-//   */
-//  @DeleteMapping("/info/{infoId}")
-//  public ResponseEntity<Void> deleteInfo(@PathVariable String infoId) {
-//    concertInfoService.deleteInfo(UUID.fromString(infoId));
-//    return ResponseEntity.ok().build();
-//  }
+  /**
+   * 콘서트 정보를 업데이트합니다.
+   *
+   * @param request 콘서트 정보 업데이트를 위한 요청 데이터.
+   * @param infoId  업데이트할 콘서트 정보의 식별자.
+   * @return 업데이트된 콘서트 정보를 담은 ResponseEntity.
+   */
+  @PutMapping("/info/{infoId}")
+  public ResponseEntity<Concert> updateInfo(@RequestBody ConcertInfoRequest request,
+                                            @PathVariable long infoId) {
+    return ResponseEntity.ok(
+            concertInfoService.updateInfo(infoId, request.title(), request.type(), request.performers(), request.schedule(), request.ticketing(),
+                    request.description(), request.link()));
+  }
+
+  /**
+   * 특정 콘서트 정보를 조회합니다.
+   *
+   * @param infoId 조회할 콘서트 정보의 식별자.
+   * @return 조회된 콘서트 정보를 담은 ResponseEntity.
+   */
+  @GetMapping("/info/{infoId}")
+  public ResponseEntity<Concert> readInfo(@PathVariable long infoId) {
+    return ResponseEntity.ok(concertInfoService.readInfo(infoId).orElse(null));
+  }
+
+  /**
+   * 콘서트 정보 목록을 조회합니다.
+   *
+   * @param genre 필터링할 콘서트 장르 (옵션).
+   * @return 조회된 콘서트 정보 목록을 담은 ResponseEntity.
+   */
+  @GetMapping("/infoListByGenre")
+  public ResponseEntity<List<Concert>> readInfoListByGenre(@RequestParam Optional<Type> genre) {
+    return ResponseEntity.ok(concertInfoService.readInfoListByGenre(genre.orElse(null)));
+  }
+
+  @GetMapping("/infoListByPerformer")
+  public ResponseEntity<List<Concert>> readInfoListByPerformer(@RequestParam Optional<String> performerName){
+    return ResponseEntity.ok(concertInfoService.readInfoListByPerformer(performerName.orElse(null)));
+  }
+
+  // 공연날짜, 공연장 별로 필터링 하는 기능 추가해보기.
+
+  @GetMapping("/readAllInfo")
+    public ResponseEntity<List<Concert>> readAllInfo(){
+        return ResponseEntity.ok(concertInfoService.readAllInfo());
+    }
+  /**
+   * 콘서트 정보를 삭제합니다.
+   *
+   * @param infoId 삭제할 콘서트 정보의 식별자.
+   * @return 삭제 성공 여부를 나타내는 ResponseEntity.
+   */
+  @DeleteMapping("/info/{infoId}")
+  public ResponseEntity<Void> deleteInfo(@PathVariable long infoId) {
+    concertInfoService.deleteInfo(infoId);
+    return ResponseEntity.ok().build();
+  }
 }

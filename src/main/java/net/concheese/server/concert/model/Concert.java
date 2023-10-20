@@ -2,43 +2,48 @@ package net.concheese.server.concert.model;
 
 import java.util.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 /**
  * {@code ConcertInfo} 클래스는 콘서트 정보를 나타내는 모델입니다.
  */
-
+@Getter
 @Entity
+@Table(name="concerts")
 public class Concert {
-  @Getter @Column(name="id") @Id
-  private final UUID id;
+  @Getter @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
   @Getter @Setter @Column(name="title")
   private String title;
   @Getter @Setter @Column(name="type")
   private Type type;
-//  @Getter @Setter @Column(name="performers")
-//  private List<String> performers;
-//  @Getter @Setter @Column(name="schedules")
-//  private List<Schedule> schedules;
-//  @Getter @Setter @Column(name="ticketing")
-//  private List<Ticketing> ticketing;
+  @Getter @Setter
+  @OneToMany(mappedBy = "concert", cascade = CascadeType.ALL, orphanRemoval = true) // mappedBy = "concert" 를 통해 Concert 객체의 schedules 필드를 참조한다는 것을 알려줌
+  private List<Schedule> schedule;
+  @Getter @Setter
+  @OneToMany(mappedBy = "concert", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Ticketing> ticketing;
   @Getter @Setter @Column(name="description")
   private String description;
   @Getter @Setter @Column(name="link")
   private String link; // url 저장 방법 찾아보기
+  @Getter @Setter
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+    name = "concert_performer",
+    joinColumns = @JoinColumn(name = "concert_id"),
+    inverseJoinColumns = @JoinColumn(name = "performer_id")) // concert_performer 테이블을 생성하고, concert_id와 performer_id를 외래키로 갖는다.
+  private List<Performer> performers;
 
-  public Concert(UUID id, String title, Type type, String description, String link) {
-    this.id = id;
+  public Concert(String title, Type type, List<Schedule> schedule, List<Ticketing> ticketing, String description, String link, List<Performer> performers) {
     this.title = title;
     this.type = type;
-//    this.performers = performers;
-//    this.schedules = schedules;
-//    this.ticketing = ticketing;
+    this.schedule = schedule;
+    this.ticketing = ticketing;
     this.description = description;
     this.link = link;
+    this.performers = performers;
   }
 }
 

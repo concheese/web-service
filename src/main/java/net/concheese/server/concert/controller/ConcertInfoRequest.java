@@ -1,5 +1,6 @@
 package net.concheese.server.concert.controller;
 
+import net.concheese.server.concert.model.Performer;
 import net.concheese.server.concert.model.Ticketing;
 import net.concheese.server.concert.model.Schedule;
 import net.concheese.server.concert.model.Type;
@@ -12,7 +13,7 @@ import java.util.List;
  * @version 1.0
  * @since 2023-09-16
  */
-public record ConcertInfoRequest(String title, Type type, List<String> performers, List<Schedule> schedule,
+public record ConcertInfoRequest(String title, Type type, List<Performer> performers, List<Schedule> schedule,
                                  List<Ticketing> ticketing, String description, String link) {
 
   /**
