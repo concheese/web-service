@@ -1,8 +1,21 @@
 spring:
-  config:
-    import: classpath:env.properties
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_DATABASE}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: true
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    org:
+      springframework:
+        context:
+          annotation: TRACE
+        web: DEBUG
+        nodeValue: INFO

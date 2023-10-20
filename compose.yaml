@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  mariadb:
+    image: 'mariadb:10.6'
+    environment:
+      - 'MARIADB_ROOT_PASSWORD='
+      - 'MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true'
+      - 'MARIADB_USER=${DB_USER}'
+      - 'MARIADB_PASSWORD=${DB_PASS}'
+      - 'MARIADB_DATABASE=${DB_DATABASE}'
+    ports:
+      - '3306:3306'
+    volumes:
+      - "./conf.d:/etc/mysql/mariadb.conf.d:ro"
