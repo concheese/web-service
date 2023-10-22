@@ -13,14 +13,14 @@ import java.util.List;
  * @version 1.0
  * @since 2023-09-16
  */
-public record ConcertInfoRequest(String title, Type type, List<Performer> performers, List<Schedule> schedule,
+public record ConcertInfoRequest(String title, Type genre, List<String> performers, List<Schedule> schedule,
                                  List<Ticketing> ticketing, String description, String link) {
 
   /**
    * 생성자를 통해 ConcertInfoRequest 객체를 생성합니다.
    *
    * @param title        콘서트 제목.
-   * @param type        콘서트 유형.
+   * @param genre        콘서트 유형.
    * @param performers   콘서트 공연자 정보.
    * @param schedule    콘서트 일정.
    * @param ticketing    티켓 정보.

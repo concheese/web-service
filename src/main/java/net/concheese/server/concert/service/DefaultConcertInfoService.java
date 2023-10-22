@@ -32,25 +32,28 @@ public class DefaultConcertInfoService implements ConcertInfoService{
   }
 
   @Override
-  public Concert createInfo(String title, Type type, List<Performer> inputPerformers, List<Schedule> schedules,
+  public Concert createInfo(String title, Type type, List<String> inputPerformers, List<Schedule> schedules,
                             List<Ticketing> ticketing, String description, String link) {
-    List<Performer> performers = new ArrayList<>();
-    Concert concert = new Concert(title, type, schedules, ticketing, description, link, inputPerformers);
-    for (Performer performer : inputPerformers) {
-      Optional<Performer> existingPerformer = performersRepository.findByName(performer.getName());
-      if (existingPerformer.isPresent()) {
-        performers.add(existingPerformer.get());
-      } else {
-        performers.add(performer);
-      }
-    }
-    concert.setPerformers(performers);
-
+    List<Performer> performers = findExistingPerformer(inputPerformers);
+    Concert concert = new Concert(title, type, schedules, ticketing, description, link, performers);
     return concertRepository.save(concert);
   }
 
+  List<Performer> findExistingPerformer(List<String> inputPerformers){
+    List<Performer> performers = new ArrayList<>();
+    for (String performer : inputPerformers) {
+      Optional<Performer> existingPerformer = performersRepository.findByName(performer);
+      if (existingPerformer.isPresent()) {
+        performers.add(existingPerformer.get());
+      } else {
+        performers.add(new Performer(performer));
+      }
+    }
+    return performers;
+  }
+
   @Override
-  public Concert updateInfo(long id, String title, Type type, List<Performer> inputPerformers, List<Schedule> schedules,
+  public Concert updateInfo(long id, String title, Type type, List<String> inputPerformers, List<Schedule> schedules,
                             List<Ticketing> ticketing, String description, String link) {
     Concert concert = concertRepository.findById(id).get();
     concert.setTitle(title);
@@ -59,7 +62,7 @@ public class DefaultConcertInfoService implements ConcertInfoService{
     concert.setTicketing(ticketing);
     concert.setDescription(description);
     concert.setLink(link);
-    concert.setPerformers(inputPerformers);
+    concert.setPerformers(findExistingPerformer(inputPerformers));
     return concertRepository.save(concert);
   }
 

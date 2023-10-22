@@ -17,7 +17,7 @@ public interface ConcertInfoService {
    *
    * @return 생성된 {@link Concert}.
    */
-  Concert createInfo(String title, Type type, List<Performer> performers, List<Schedule> schedule, List<Ticketing> ticketing, String description, String link);
+  Concert createInfo(String title, Type type, List<String> performers, List<Schedule> schedule, List<Ticketing> ticketing, String description, String link);
 
   /**
    * 기존 콘서트 정보 항목을 업데이트합니다.
@@ -32,7 +32,7 @@ public interface ConcertInfoService {
    * @param link             콘서트와 관련된 링크.
    * @return 업데이트된 {@link Concert}.
    */
-  Concert updateInfo(long infoId, String title, Type type, List<Performer> performers, List<Schedule> schedules,
+  Concert updateInfo(long infoId, String title, Type type, List<String> performers, List<Schedule> schedules,
                      List<Ticketing> ticketing, String description, String link);
 
   /**

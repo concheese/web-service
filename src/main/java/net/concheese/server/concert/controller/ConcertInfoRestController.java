@@ -34,7 +34,7 @@ public class ConcertInfoRestController {
   @PostMapping("/info")
   public ResponseEntity<Concert> createInfo(@RequestBody ConcertInfoRequest request) {
     return ResponseEntity.ok(
-        concertInfoService.createInfo(request.title(), request.type(), request.performers(), request.schedule(), request.ticketing(),
+        concertInfoService.createInfo(request.title(), request.genre(), request.performers(), request.schedule(), request.ticketing(),
             request.description(), request.link()));
   }
 
@@ -55,7 +55,7 @@ public class ConcertInfoRestController {
   public ResponseEntity<Concert> updateInfo(@RequestBody ConcertInfoRequest request,
                                             @PathVariable long infoId) {
     return ResponseEntity.ok(
-            concertInfoService.updateInfo(infoId, request.title(), request.type(), request.performers(), request.schedule(), request.ticketing(),
+            concertInfoService.updateInfo(infoId, request.title(), request.genre(), request.performers(), request.schedule(), request.ticketing(),
                     request.description(), request.link()));
   }
 
