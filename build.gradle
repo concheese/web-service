@@ -26,9 +26,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
-    implementation 'com.google.firebase:firebase-admin:9.0.0'
-    implementation "com.squareup.okhttp3:okhttp:4.11.0"
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
