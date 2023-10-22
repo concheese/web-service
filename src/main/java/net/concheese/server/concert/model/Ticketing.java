@@ -19,9 +19,9 @@ public class Ticketing {
     private Concert concert;
 
     @Getter @Setter
-    private LocalDateTime start;
+    private Timestamp start;
     @Getter @Setter
-    private LocalDateTime end;
+    private Timestamp end;
     @Getter @Setter
     private TicketingType status;
 }
