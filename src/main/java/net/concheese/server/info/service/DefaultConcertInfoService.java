@@ -1,11 +1,20 @@
-package net.concheese.server.concert.service;
+package net.concheese.server.info.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import net.concheese.server.concert.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.concheese.server.info.model.Concert;
+import net.concheese.server.info.model.Performer;
+import net.concheese.server.info.model.PerformerConcert;
+import net.concheese.server.info.model.Schedule;
+import net.concheese.server.info.model.Ticketing;
+import net.concheese.server.info.repository.ConcertPerformerRepository;
+import net.concheese.server.info.repository.ConcertRepository;
+import net.concheese.server.info.repository.PerformersRepository;
+import net.concheese.server.info.repository.ScheduleRepository;
+import net.concheese.server.info.repository.TicketingRepository;
 import org.springframework.stereotype.Service;
 import net.concheese.server.concert.repository.*;
 

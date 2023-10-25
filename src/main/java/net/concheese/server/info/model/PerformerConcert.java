@@ -1,4 +1,4 @@
-package net.concheese.server.concert.model;
+package net.concheese.server.info.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

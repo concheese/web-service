@@ -1,9 +1,13 @@
-package net.concheese.server.concert.service;
+package net.concheese.server.info.service;
 
 import net.concheese.server.concert.model.*;
 
 import java.util.List;
 import java.util.Optional;
+import net.concheese.server.info.model.Concert;
+import net.concheese.server.info.model.Performer;
+import net.concheese.server.info.model.Schedule;
+import net.concheese.server.info.model.Ticketing;
 
 /**
  * {@code ConcertInfoService} 인터페이스는 콘서트 정보를 관리하는 데 필요한 작업을 정의합니다.

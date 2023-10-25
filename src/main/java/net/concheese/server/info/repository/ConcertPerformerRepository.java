@@ -1,8 +1,7 @@
-package net.concheese.server.concert.repository;
+package net.concheese.server.info.repository;
 
-import net.concheese.server.concert.model.Concert;
-import net.concheese.server.concert.model.Performer;
-import net.concheese.server.concert.model.PerformerConcert;
+import net.concheese.server.info.model.Performer;
+import net.concheese.server.info.model.PerformerConcert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 

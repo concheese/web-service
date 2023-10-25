@@ -1,8 +1,8 @@
-package net.concheese.server.concert.controller;
+package net.concheese.server.info.controller;
 
-import net.concheese.server.concert.model.Performer;
-import net.concheese.server.concert.model.Ticketing;
-import net.concheese.server.concert.model.Schedule;
+import net.concheese.server.info.model.Performer;
+import net.concheese.server.info.model.Ticketing;
+import net.concheese.server.info.model.Schedule;
 import net.concheese.server.concert.model.Type;
 
 import java.util.List;

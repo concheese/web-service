@@ -1,13 +1,11 @@
-package net.concheese.server.concert.controller;
+package net.concheese.server.info.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import net.concheese.server.concert.model.Concert;
-import net.concheese.server.concert.model.Performer;
+import net.concheese.server.info.model.Concert;
 import net.concheese.server.concert.model.Type;
-import net.concheese.server.concert.service.ConcertInfoService;
+import net.concheese.server.info.service.ConcertInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
