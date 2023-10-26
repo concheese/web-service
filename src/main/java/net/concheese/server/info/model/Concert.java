@@ -1,50 +1,73 @@
 package net.concheese.server.info.model;
 
-import java.util.*;
-
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.List;
+import net.concheese.server.common.BaseEntity;
 
 /**
- * {@code ConcertInfo} 클래스는 콘서트 정보를 나타내는 모델입니다.
+ * concheese 어플리케이션에서 개최되는 각각의 공연를 나타내는 엔터티 클래스입니다.
+ * <p>
+ * 이 클래스는 공연의 제목, 유형, 일정, 티켓팅 정보, 설명, 링크 및 참여하는 연주자들에 대한 정보를 포함하고 있습니다.
+ * </p>
+ *
+ * @author Lynn Choi
+ * @author Ji Myoung Ha
+ * @version 1.0
+ * @since 2023-10-21
  */
-@Getter
 @Entity
-@Table(name="concerts")
-public class Concert {
-  @Getter @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  @Getter @Setter @Column(name="title")
+@Table(name = "concerts")
+public class Concert extends BaseEntity {
+
+  /**
+   * 공연의 제목입니다.
+   */
+  @Column(name = "title")
   private String title;
-  @Getter @Setter @Column(name="type")
-  private Type type;
-  @Getter @Setter
-  @OneToMany(mappedBy = "concert", cascade = CascadeType.ALL, orphanRemoval = true) // mappedBy = "concert" 를 통해 Concert 객체의 schedules 필드를 참조한다는 것을 알려줌
-  private List<Schedule> schedule;
-  @Getter @Setter
-  @OneToMany(mappedBy = "concert", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Ticketing> ticketing;
-  @Getter @Setter @Column(name="description")
+
+  /**
+   * 공연의 유형입니다. (예: 콘서트, 뮤지컬, 오케스트라 등)
+   */
+  @Column(name = "type")
+  @Enumerated(EnumType.STRING)
+  private ConcertType type;
+
+  /**
+   * 공연의 일정 목록입니다.
+   */
+  @OneToMany
+  @Column(name = "schedules")
+  private List<Schedule> schedules;
+
+  /**
+   * 공연의 티켓팅 정보 목록입니다.
+   */
+  @OneToMany
+  @Column(name = "ticketings")
+  private List<Ticketing> ticketings;
+
+  /**
+   * 공연에 대한 상세 설명입니다.
+   */
+  @Column(name = "description")
   private String description;
-  @Getter @Setter @Column(name="link")
-  private String link; // url 저장 방법 찾아보기
-  @Getter @Setter
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-    name = "concert_performer",
-    joinColumns = @JoinColumn(name = "concert_id"),
-    inverseJoinColumns = @JoinColumn(name = "performer_id")) // concert_performer 테이블을 생성하고, concert_id와 performer_id를 외래키로 갖는다.
+
+  /**
+   * 공연 정보나 티켓 구매 등과 관련된 외부 링크입니다.
+   */
+  @Column(name = "link")
+  private String link;
+
+  /**
+   * 공연에 참여하는 연주자나 아티스트의 목록입니다.
+   */
+  @OneToMany
+  @Column(name = "performers")
   private List<Performer> performers;
 
-  public Concert(String title, Type type, List<Schedule> schedule, List<Ticketing> ticketing, String description, String link, List<Performer> performers) {
-    this.title = title;
-    this.type = type;
-    this.schedule = schedule;
-    this.ticketing = ticketing;
-    this.description = description;
-    this.link = link;
-    this.performers = performers;
-  }
 }
-
-
