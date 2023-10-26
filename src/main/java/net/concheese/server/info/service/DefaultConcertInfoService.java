@@ -2,108 +2,132 @@ package net.concheese.server.info.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import net.concheese.server.concert.model.*;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import net.concheese.server.info.converter.ConcertFormToConcert;
+import net.concheese.server.info.dto.ConcertForm;
 import net.concheese.server.info.model.Concert;
+import net.concheese.server.info.model.ConcertType;
 import net.concheese.server.info.model.Performer;
-import net.concheese.server.info.model.PerformerConcert;
-import net.concheese.server.info.model.Schedule;
-import net.concheese.server.info.model.Ticketing;
-import net.concheese.server.info.repository.ConcertPerformerRepository;
 import net.concheese.server.info.repository.ConcertRepository;
-import net.concheese.server.info.repository.PerformersRepository;
+import net.concheese.server.info.repository.PerformerRepository;
 import net.concheese.server.info.repository.ScheduleRepository;
 import net.concheese.server.info.repository.TicketingRepository;
 import org.springframework.stereotype.Service;
-import net.concheese.server.concert.repository.*;
 
 /**
- * {@code DefaultConcertInfoService} 클래스는 {@code ConcertInfoService} 인터페이스의 기본 구현을 제공합니다. 이 서비스는 콘서트
- * 정보의 생성, 업데이트, 검색, 목록 조회 및 삭제와 관련된 작업을 처리합니다.
+ * {@code DefaultConcertInfoService} 클래스는 {@code ConcertInfoService} 인터페이스의 기본 구현을 제공합니다. 이 서비스는 공연
+ * 정보의 생성, 업데이트, 검색, 목록 조회 및 삭제와 관련된 작업을 처리합니다. 추가적으로, 공연 제목, 공연 유형, 또는 수행자 이름으로 공연을 검색하는 기능도
+ * 포함됩니다.
  *
+ * @author Lynn Choi
+ * @author MyoungHa Ji
  * @since 2023-09-16
  */
+@RequiredArgsConstructor
 @Service
-public class DefaultConcertInfoService implements ConcertInfoService{
+public class DefaultConcertInfoService implements ConcertInfoService {
+
   private final ConcertRepository concertRepository;
-  private final PerformersRepository performersRepository;
-  private final ConcertPerformerRepository concertPerformerRepository;
+  private final PerformerRepository performerRepository;
   private final ScheduleRepository scheduleRepository;
   private final TicketingRepository ticketingRepository;
+  private final ConcertFormToConcert concertFormToConcert;
 
-  public DefaultConcertInfoService(ConcertRepository concertRepository, PerformersRepository performersRepository, ConcertPerformerRepository concertPerformerRepository, ScheduleRepository scheduleRepository, TicketingRepository ticketingRepository) {
-    this.concertRepository = concertRepository;
-    this.performersRepository = performersRepository;
-    this.concertPerformerRepository = concertPerformerRepository;
-    this.scheduleRepository = scheduleRepository;
-    this.ticketingRepository = ticketingRepository;
-  }
-
+  /**
+   * 주어진 콘서트 엔터티를 저장하거나 업데이트합니다.
+   *
+   * @param concert 저장하거나 업데이트할 콘서트 엔터티.
+   * @return 저장되거나 업데이트된 콘서트 엔터티.
+   */
   @Override
-  public Concert createInfo(String title, Type type, List<Performer> inputPerformers, List<Schedule> schedules,
-                            List<Ticketing> ticketing, String description, String link) {
-    List<Performer> performers = new ArrayList<>();
-    Concert concert = new Concert(title, type, schedules, ticketing, description, link, inputPerformers);
-    for (Performer performer : inputPerformers) {
-      Optional<Performer> existingPerformer = performersRepository.findByName(performer.getName());
-      if (existingPerformer.isPresent()) {
-        performers.add(existingPerformer.get());
-      } else {
-        performers.add(performer);
-      }
-    }
-    concert.setPerformers(performers);
-
-    return concertRepository.save(concert);
+  public Concert saveOrUpdate(Concert concert) {
+    concertRepository.save(concert);
+    return concert;
   }
 
+  /**
+   * 주어진 {@link ConcertForm}을 기반으로 콘서트를 저장하거나 업데이트합니다.
+   *
+   * @param concertForm 콘서트 정보를 포함하는 DTO.
+   * @return 저장되거나 업데이트된 콘서트 엔터티.
+   */
   @Override
-  public Concert updateInfo(long id, String title, Type type, List<Performer> inputPerformers, List<Schedule> schedules,
-                            List<Ticketing> ticketing, String description, String link) {
-    Concert concert = concertRepository.findById(id).get();
-    concert.setTitle(title);
-    concert.setType(type);
-    concert.setSchedule(schedules);
-    concert.setTicketing(ticketing);
-    concert.setDescription(description);
-    concert.setLink(link);
-    concert.setPerformers(inputPerformers);
-    return concertRepository.save(concert);
+  public Concert saveOrUpdateConcertForm(ConcertForm concertForm) {
+    return saveOrUpdate(concertFormToConcert.convert(concertForm));
   }
 
+  /**
+   * 모든 콘서트의 목록을 검색합니다.
+   *
+   * @return 모든 콘서트의 목록.
+   */
   @Override
-  public Optional<Concert> readInfo(long infoId) {
-    return concertRepository.findById(infoId);
+  public List<Concert> listAll() {
+    return new ArrayList<>(concertRepository.findAll());
   }
 
+  /**
+   * 특정 제목으로 콘서트 목록을 검색합니다.
+   *
+   * @param title 검색할 콘서트의 제목.
+   * @return 주어진 제목의 콘서트 목록.
+   */
   @Override
-  public List<Concert> readInfoListByGenre(Type genre) {
-    return concertRepository.findByType(genre);
+  public List<Concert> listAllByTitle(String title) {
+    return concertRepository.findAllByTitle(title);
   }
 
-
+  /**
+   * 특정 유형의 콘서트 목록을 검색합니다.
+   *
+   * @param type 검색할 콘서트의 유형.
+   * @return 주어진 유형의 콘서트 목록.
+   */
   @Override
-    public List<Concert> readInfoListByPerformer(String name) {
-    // 괜찮은 방법인지 확인 필요
-    Performer performer = performersRepository.findByName(name).get();
-    List<PerformerConcert> connections = concertPerformerRepository.findByPerformer(performer);
-    List<Concert> concerts = new ArrayList<>();
-    for (PerformerConcert connection : connections) {
-      concerts.add(connection.getConcert());
-    }
-    return concerts;
+  public List<Concert> listAllByType(ConcertType type) {
+    return new ArrayList<>(concertRepository.findAllByType(type));
   }
 
+  /**
+   * 이름으로 퍼포머와 관련된 콘서트 목록을 검색합니다.
+   *
+   * @param name 퍼포머의 이름.
+   * @return 주어진 퍼포머 이름과 관련된 콘서트 목록.
+   */
   @Override
-  public List<Concert> readAllInfo() {
-    return concertRepository.findAll();
+  public List<Concert> listAllByPerformerName(String name) {
+    Performer performer = performerRepository.findByName(name).orElse(null);
+    List<Concert> allConcerts = listAll();
+    return performer == null ? allConcerts
+        : allConcerts.stream().filter(concert -> concert.getPerformers().contains(performer))
+            .collect(Collectors.toList());
   }
 
+  /**
+   * 고유 식별자로 콘서트를 검색합니다.
+   *
+   * @param id 검색할 콘서트의 UUID.
+   * @return 주어진 UUID의 콘서트 또는 찾을 수 없는 경우 null.
+   */
   @Override
-  public void deleteInfo(long infoId) {
-    concertRepository.deleteById(infoId);
-    // 삭제 했을 때 연관된 티켓팅, 스케줄, 공연자연결 정보도 삭제되는지 DB 확인 필요.
-    // Performer 테이블의 공연자 정보는 삭제되지 않아야 함.
+  public Concert getById(UUID id) {
+    return concertRepository.findById(id).orElse(null);
   }
+
+  /**
+   * 고유 식별자로 콘서트를 삭제합니다. 관련된 일정과 티켓팅 정보도 함께 삭제합니다.
+   *
+   * @param id 삭제할 콘서트의 UUID.
+   */
+  @Override
+  public void delete(UUID id) {
+    concertRepository.findById(id).ifPresent(concert -> {
+      scheduleRepository.deleteAll(concert.getSchedules());
+      ticketingRepository.deleteAll(concert.getTicketings());
+    });
+    concertRepository.deleteById(id);
+  }
+
 }

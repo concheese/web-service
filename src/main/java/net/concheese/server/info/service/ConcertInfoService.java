@@ -1,73 +1,87 @@
 package net.concheese.server.info.service;
 
-import net.concheese.server.concert.model.*;
-
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
+import net.concheese.server.info.dto.ConcertForm;
 import net.concheese.server.info.model.Concert;
-import net.concheese.server.info.model.Performer;
-import net.concheese.server.info.model.Schedule;
-import net.concheese.server.info.model.Ticketing;
+import net.concheese.server.info.model.ConcertType;
 
 /**
- * {@code ConcertInfoService} 인터페이스는 콘서트 정보를 관리하는 데 필요한 작업을 정의합니다.
+ * {@code Concert} 엔터티에 대한 서비스 계층의 인터페이스입니다.
+ * <p>
+ * 이 인터페이스는 {@code Concert} 관련 작업에 대한 핵심 비즈니스 로직을 정의합니다. 여기에는 공연 정보의 생성, 수정, 조회 및 삭제와 같은 기본 CRUD 작업이
+ * 포함됩니다.
+ * </p>
  *
+ * @author Lynn Choi
+ * @author MyoungHa Ji
+ * @version 1.0
+ * @see net.concheese.server.info.model.Concert
+ * @see net.concheese.server.info.dto.ConcertForm
  * @since 2023-09-16
  */
 public interface ConcertInfoService {
 
   /**
-   * 새로운 콘서트 정보 항목을 생성합니다.
+   * 제공된 공연 정보를 저장하거나 업데이트합니다.
    *
-   * @return 생성된 {@link Concert}.
+   * @param concert 저장하거나 업데이트할 공연 정보.
+   * @return 저장된 공연 정보.
    */
-  Concert createInfo(String title, Type type, List<Performer> performers, List<Schedule> schedule, List<Ticketing> ticketing, String description, String link);
+  Concert saveOrUpdate(Concert concert);
 
   /**
-   * 기존 콘서트 정보 항목을 업데이트합니다.
+   * 제공된 공연 양식을 사용하여 공연 정보를 저장하거나 업데이트합니다.
    *
-   * @param infoId            업데이트할 콘서트 정보의 고유 식별자.
-   * @param title            콘서트의 제목.
-   * @param type            콘서트의 장르.
-   * @param performers `      콘서트의 공연자.
-   * @param ticketing        콘서트 티켓 정보.
-   * @param schedules        콘서트의 일정.
-   * @param description      콘서트에 대한 설명.
-   * @param link             콘서트와 관련된 링크.
-   * @return 업데이트된 {@link Concert}.
+   * @param concertForm 저장하거나 업데이트할 공연 양식.
+   * @return 저장된 공연 정보.
    */
-  Concert updateInfo(long infoId, String title, Type type, List<Performer> performers, List<Schedule> schedules,
-                     List<Ticketing> ticketing, String description, String link);
+  Concert saveOrUpdateConcertForm(ConcertForm concertForm);
 
   /**
-   * 고유 식별자로 콘서트 정보를 읽어옵니다.
+   * 모든 공연 정보를 반환합니다.
    *
-   * @param infoId 읽어올 콘서트 정보의 고유 식별자.
-   * @return 찾은 경우 {@link Concert} 또는 찾지 못한 경우 {@code null}.
+   * @return 모든 공연 정보의 목록.
    */
-  Optional<Concert> readInfo(long infoId);
+  List<Concert> listAll();
 
   /**
-   * 장르로 필터링된 콘서트 정보 항목 목록을 검색합니다.
+   * 주어진 공연 제목으로 모든 공연을 검색합니다.
    *
-   * @param type 필터링할 장르.
-   * @return 해당 장르와 일치하는 {@link Concert} 항목 목록.
+   * @param title 공연 제목
+   * @return 해당 제목의 공연 목록
    */
-  List<Concert> readInfoListByGenre(Type type);
-
-  List<Concert> readInfoListByPerformer(String performer);
+  List<Concert> listAllByTitle(String title);
 
   /**
-   * 모든 콘서트 정보 항목의 목록을 검색합니다.
+   * 주어진 공연 유형으로 모든 공연를 검색합니다.
    *
-   * @return 모든 사용 가능한 {@link Concert} 항목 목록.
+   * @param type 공연 유형
+   * @return 해당 유형의 공연 목록
    */
-  List<Concert> readAllInfo();
+  List<Concert> listAllByType(ConcertType type);
 
   /**
-   * 고유 식별자로 콘서트 정보를 삭제합니다.
+   * 주어진 수행자의 이름으로 모든 공연을 검색합니다.
    *
-   * @param infoId 삭제할 콘서트 정보의 고유 식별자.
+   * @param name 수행자 이름
+   * @return 해당 수행자 이름의 공연 목록
    */
-  void deleteInfo(long infoId);
+  List<Concert> listAllByPerformerName(String name);
+
+  /**
+   * 지정된 ID로 공연 정보를 반환합니다.
+   *
+   * @param id 조회할 공연 정보의 UUID.
+   * @return 지정된 ID를 가진 공연 정보.
+   */
+  Concert getById(UUID id);
+
+  /**
+   * 지정된 ID의 공연 정보를 삭제합니다.
+   *
+   * @param id 삭제할 공연 정보의 UUID.
+   */
+  void delete(UUID id);
+
 }
