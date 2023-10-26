@@ -28,6 +28,14 @@ import org.springframework.stereotype.Repository;
 public interface ConcertRepository extends JpaRepository<Concert, UUID> {
 
   /**
+   * 주어진 공연 제목으로 모든 공연을 검색합니다.
+   *
+   * @param title 공연 제목
+   * @return 해당 제목의 공연 목록
+   */
+  List<Concert> findAllByTitle(String title);
+
+  /**
    * 주어진 공연 유형으로 모든 공연를 검색합니다.
    *
    * @param type 공연 유형
