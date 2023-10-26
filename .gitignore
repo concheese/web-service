@@ -38,3 +38,4 @@ out/
 
 ### Local Configuration ###
 env.properties
+/src/main/resources/credentials.json
