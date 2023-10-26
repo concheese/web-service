@@ -7,6 +7,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import net.concheese.server.common.BaseEntity;
 
 /**
@@ -20,6 +22,8 @@ import net.concheese.server.common.BaseEntity;
  * @version 1.0
  * @since 2023-10-21
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "concerts")
 public class Concert extends BaseEntity {

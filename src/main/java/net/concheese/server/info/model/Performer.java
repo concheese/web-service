@@ -2,6 +2,8 @@ package net.concheese.server.info.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 import net.concheese.server.common.BaseEntity;
 
 /**
@@ -12,6 +14,8 @@ import net.concheese.server.common.BaseEntity;
  * @version 1.0
  * @since 2023-10-21
  */
+@Getter
+@Setter
 @Entity
 public class Performer extends BaseEntity {
 
