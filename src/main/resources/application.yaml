@@ -1,6 +1,6 @@
 spring:
   config:
-    import: classpath:.env.properties
+    import: classpath:env.properties
   profiles:
     include: secret
   datasource:
