@@ -2,6 +2,7 @@ package net.concheese.server.info.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,10 @@ public class DefaultConcertInfoService implements ConcertInfoService {
    */
   @Override
   public Concert saveOrUpdate(Concert concert) {
+    // TODO: 중복된 Schedule, Ticketing, Performer에 대한 Verify, Linking이 필요함.
+    scheduleRepository.saveAll(concert.getSchedules());
+    ticketingRepository.saveAll(concert.getTicketings());
+    performerRepository.saveAll(concert.getPerformers());
     concertRepository.save(concert);
     return concert;
   }
@@ -55,7 +60,7 @@ public class DefaultConcertInfoService implements ConcertInfoService {
    */
   @Override
   public Concert saveOrUpdateConcertForm(ConcertForm concertForm) {
-    return saveOrUpdate(concertFormToConcert.convert(concertForm));
+    return saveOrUpdate(Objects.requireNonNull(concertFormToConcert.convert(concertForm)));
   }
 
   /**
@@ -126,6 +131,13 @@ public class DefaultConcertInfoService implements ConcertInfoService {
     concertRepository.findById(id).ifPresent(concert -> {
       scheduleRepository.deleteAll(concert.getSchedules());
       ticketingRepository.deleteAll(concert.getTicketings());
+      concert.getPerformers().forEach(performer -> {
+        List<Concert> concerts = listAllByPerformerName(performer.getName());
+        concerts.remove(concert);
+        if (concerts.isEmpty()) {
+          performerRepository.delete(performer);
+        }
+      });
     });
     concertRepository.deleteById(id);
   }
