@@ -13,4 +13,9 @@ public class Performer {
     private long id;
     @Getter @Setter @Column(name="name")
     private String name;
+
+    public Performer(String performer) {
+    }
+    public Performer() {
+    }
 }
