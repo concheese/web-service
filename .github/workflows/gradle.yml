@@ -40,9 +40,7 @@ jobs:
 
       - name: access to firebase secrets
         run: |
-            echo $FIREBASE_SECRET_KEY >> credentials.json | base64 --decode
-        env:
-            FIREBASE_SECRET_KEY: ${{secrets.CREDENTIALS}}
+            echo "${{ FIREBASE_SECRET_KEY }}" >> credentials.json | base64 --decode
             
       - name: Build with Gradle
         run: ./gradlew clean build
