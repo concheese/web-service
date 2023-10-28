@@ -38,3 +38,8 @@ out/
 
 ### Local Configuration ###
 env.properties
+**/src/main/resources/env.properties
+**/src/main/resources/.env.properties
+**/src/main/resources/application-secret.yaml
+src/main/resources/.env.properties
+src/main/resources/application-secret.yaml
