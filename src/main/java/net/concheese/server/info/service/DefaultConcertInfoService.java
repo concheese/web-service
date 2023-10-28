@@ -45,9 +45,15 @@ public class DefaultConcertInfoService implements ConcertInfoService {
   @Override
   public Concert saveOrUpdate(Concert concert) {
     // TODO: 중복된 Schedule, Ticketing, Performer에 대한 Verify, Linking이 필요함.
-    scheduleRepository.saveAll(concert.getSchedules());
-    ticketingRepository.saveAll(concert.getTicketings());
-    performerRepository.saveAll(concert.getPerformers());
+    if (concert.getSchedules() != null) {
+      scheduleRepository.saveAll(concert.getSchedules());
+    }
+    if (concert.getTicketings() != null) {
+      ticketingRepository.saveAll(concert.getTicketings());
+    }
+    if (concert.getPerformers() != null) {
+      performerRepository.saveAll(concert.getPerformers());
+    }
     concertRepository.save(concert);
     return concert;
   }
