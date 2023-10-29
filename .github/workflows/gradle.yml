@@ -43,7 +43,7 @@ jobs:
           chmod 600 deploy_key
           scp -P $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/*.jar $SSH_USER@$SSH_HOST:/tmp/app.jar
           ssh -p $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SSH_USER@$SSH_HOST <<EOF
-            sudo mv /tmp/app.jar /opt/concheese/app.jar
-            sudo systemctl restart concheese-server
+            cp /tmp/app.jar /opt/concheese/app.jar
+            systemctl --user restart concheese-server
           EOF
           rm -f deploy_key
