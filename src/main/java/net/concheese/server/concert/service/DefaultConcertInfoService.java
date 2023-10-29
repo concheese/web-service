@@ -1,15 +1,13 @@
 package net.concheese.server.concert.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import net.concheese.server.concert.model.ConcertDate;
-import net.concheese.server.concert.model.ConcertInfo;
-import net.concheese.server.concert.model.ConcertTicketInfo;
-import net.concheese.server.concert.model.Genre;
-import net.concheese.server.concert.model.Location;
-import net.concheese.server.concert.repository.DefaultConcertRepository;
+
+import net.concheese.server.concert.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import net.concheese.server.concert.repository.*;
 
 /**
  * {@code DefaultConcertInfoService} 클래스는 {@code ConcertInfoService} 인터페이스의 기본 구현을 제공합니다. 이 서비스는 콘서트
@@ -18,70 +16,88 @@ import org.springframework.stereotype.Service;
  * @since 2023-09-16
  */
 @Service
-public class DefaultConcertInfoService implements ConcertInfoService {
+public class DefaultConcertInfoService implements ConcertInfoService{
+  private final ConcertRepository concertRepository;
+  private final PerformersRepository performersRepository;
+  private final ConcertPerformerRepository concertPerformerRepository;
+  private final ScheduleRepository scheduleRepository;
+  private final TicketingRepository ticketingRepository;
 
-  private final DefaultConcertRepository concertRepository;
-
-  public DefaultConcertInfoService(DefaultConcertRepository concertRepository) {
+  public DefaultConcertInfoService(ConcertRepository concertRepository, PerformersRepository performersRepository, ConcertPerformerRepository concertPerformerRepository, ScheduleRepository scheduleRepository, TicketingRepository ticketingRepository) {
     this.concertRepository = concertRepository;
+    this.performersRepository = performersRepository;
+    this.concertPerformerRepository = concertPerformerRepository;
+    this.scheduleRepository = scheduleRepository;
+    this.ticketingRepository = ticketingRepository;
   }
 
   @Override
-  public ConcertInfo createInfo(String title, Genre genre, String location, String artist,
-      ConcertTicketInfo preTicketing, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link) {
-    int[] locInt= {0,0,0};
-    String[] loc = location.split("/");
-    if(loc.length == 1)locInt[0] = Integer.parseInt(loc[0]);
-    if(loc.length == 2) {
-      locInt[0] = Integer.parseInt(loc[0]);
-      locInt[1] = Integer.parseInt(loc[1]);
+  public Concert createInfo(String title, Type type, List<String> inputPerformers, List<Schedule> schedules,
+                            List<Ticketing> ticketing, String description, String link) {
+    List<Performer> performers = findExistingPerformer(inputPerformers);
+    Concert concert = new Concert(title, type, schedules, ticketing, description, link, performers);
+    return concertRepository.save(concert);
+  }
+
+  List<Performer> findExistingPerformer(List<String> inputPerformers){
+    List<Performer> performers = new ArrayList<>();
+    for (String performer : inputPerformers) {
+      Optional<Performer> existingPerformer = performersRepository.findByName(performer);
+      if (existingPerformer.isPresent()) {
+        performers.add(existingPerformer.get());
+      } else {
+        performers.add(new Performer(performer));
+      }
     }
-    if(loc.length == 3) {
-      locInt[0] = Integer.parseInt(loc[0]);
-      locInt[1] = Integer.parseInt(loc[1]);
-      locInt[2] = Integer.parseInt(loc[2]);
+    return performers;
+  }
+
+  @Override
+  public Concert updateInfo(long id, String title, Type type, List<String> inputPerformers, List<Schedule> schedules,
+                            List<Ticketing> ticketing, String description, String link) {
+    Concert concert = concertRepository.findById(id).get();
+    concert.setTitle(title);
+    concert.setType(type);
+    concert.setSchedule(schedules);
+    concert.setTicketing(ticketing);
+    concert.setDescription(description);
+    concert.setLink(link);
+    concert.setPerformers(findExistingPerformer(inputPerformers));
+    return concertRepository.save(concert);
+  }
+
+  @Override
+  public Optional<Concert> readInfo(long infoId) {
+    return concertRepository.findById(infoId);
+  }
+
+  @Override
+  public List<Concert> readInfoListByGenre(Type genre) {
+    return concertRepository.findByType(genre);
+  }
+
+
+  @Override
+    public List<Concert> readInfoListByPerformer(String name) {
+    // 괜찮은 방법인지 확인 필요
+    Performer performer = performersRepository.findByName(name).get();
+    List<PerformerConcert> connections = concertPerformerRepository.findByPerformer(performer);
+    List<Concert> concerts = new ArrayList<>();
+    for (PerformerConcert connection : connections) {
+      concerts.add(connection.getConcert());
     }
-
-
-
-    Location location1 = new Location(UUID.randomUUID(),locInt[0],locInt[1],locInt[2],"Temp name");
-
-    ConcertTicketInfo preT = new ConcertTicketInfo(UUID.randomUUID(),preTicketing.getStartedAt(), preTicketing.getStartedAt(),preTicketing.getStartTime(), preTicketing.getType());
-    ConcertTicketInfo Ticket = new ConcertTicketInfo(UUID.randomUUID(),ticketing.getStartedAt(),ticketing.getStartedAt(), ticketing.getStartTime(), ticketing.getType());
-    ConcertDate concertDate1 = new ConcertDate(UUID.randomUUID(), concertDate.getstartedAt(),concertDate.getstartedAt(), concertDate.getStartTime());
-
-    ConcertInfo concertInfo = new ConcertInfo(UUID.randomUUID(), title, genre, location1, artist,
-            preT, Ticket, concertDate1, description, link);
-    return concertRepository.insert(concertInfo);
+    return concerts;
   }
 
   @Override
-  public ConcertInfo updateInfo(UUID infoId, String title, Genre genre, String location, String artist,
-      ConcertTicketInfo concertTicketInfo, ConcertTicketInfo ticketing, ConcertDate concertDate,
-      String description, String link) {
-    Location location1 = new Location(UUID.randomUUID(),1,1,1,location);
-    return concertRepository.update(infoId, title, genre, location1, artist, concertTicketInfo, ticketing,
-        concertDate, description, link);
+  public List<Concert> readAllInfo() {
+    return concertRepository.findAll();
   }
 
   @Override
-  public ConcertInfo readInfo(UUID infoId) {
-    return concertRepository.readById(infoId);
-  }
-
-  @Override
-  public List<ConcertInfo> readInfoList(Genre genre) {
-    return concertRepository.readByGenre(genre);
-  }
-
-  @Override
-  public List<ConcertInfo> readAllInfo() {
-    return concertRepository.readAllInfo();
-  }
-
-  @Override
-  public void deleteInfo(UUID infoId) {
-    concertRepository.deleteInfo(infoId);
+  public void deleteInfo(long infoId) {
+    concertRepository.deleteById(infoId);
+    // 삭제 했을 때 연관된 티켓팅, 스케줄, 공연자연결 정보도 삭제되는지 DB 확인 필요.
+    // Performer 테이블의 공연자 정보는 삭제되지 않아야 함.
   }
 }
