@@ -4,11 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/*
+      - feature/refactor
   pull_request:
     branches:
       - main
       - dev
+      - feature/refactor
 
 permissions:
   contents: read
