@@ -12,6 +12,12 @@ spring:
     open-in-view: true
     show-sql: true
 
+springdoc:
+  api-docs:
+    path: "/api-docs/v1"
+  swagger-ui:
+    path: "/docs.html"
+
 management:
   endpoints:
     web:
