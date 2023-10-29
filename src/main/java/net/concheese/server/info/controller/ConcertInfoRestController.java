@@ -6,7 +6,11 @@ import net.concheese.server.info.dto.ConcertForm;
 import net.concheese.server.info.model.Concert;
 import net.concheese.server.info.model.ConcertType;
 import net.concheese.server.info.service.ConcertInfoService;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +46,7 @@ public class ConcertInfoRestController {
    * @param request 콘서트 등록 정보를 담은 요청 객체.
    * @return 등록된 콘서트 객체.
    */
-  @RequestMapping("/register")
+  @PostMapping("/register")
   public Concert newConcert(@RequestBody ConcertForm request) {
     return concertInfoService.saveOrUpdateConcertForm(request);
   }
@@ -53,7 +57,7 @@ public class ConcertInfoRestController {
    * @param request 콘서트 업데이트 정보를 담은 요청 객체.
    * @return 업데이트된 콘서트 객체.
    */
-  @RequestMapping("/update")
+  @PutMapping("/update")
   public Concert updateConcert(@RequestBody ConcertForm request) {
     return concertInfoService.saveOrUpdateConcertForm(request);
   }
@@ -66,7 +70,7 @@ public class ConcertInfoRestController {
    * @param performerName 연주자 이름을 기준으로 필터링 할 경우 사용.
    * @return 조건에 맞는 콘서트 목록.
    */
-  @RequestMapping("/list")
+  @GetMapping("/list")
   public List<Concert> listConcerts(@RequestParam(value = "title", required = false) String title,
       @RequestParam(value = "type", required = false) String type,
       @RequestParam(value = "performer", required = false) String performerName) {
@@ -89,7 +93,7 @@ public class ConcertInfoRestController {
    * @param id 조회하려는 콘서트의 UUID 문자열.
    * @return 해당 식별자를 가진 콘서트 객체.
    */
-  @RequestMapping("/{id}")
+  @GetMapping("/{id}")
   public Concert getConcert(@PathVariable String id) {
     return concertInfoService.getById(UUID.fromString(id));
   }
@@ -99,7 +103,7 @@ public class ConcertInfoRestController {
    *
    * @param id 삭제하려는 콘서트의 UUID 문자열.
    */
-  @RequestMapping("/delete/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteConcert(@PathVariable String id) {
     concertInfoService.delete(UUID.fromString(id));
   }
