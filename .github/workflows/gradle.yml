@@ -35,13 +35,14 @@ jobs:
       - name: Deploy to Linux server
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_PORT: $${secrets.SSH_PORT}}
           SSH_USER: $${secrets.SSH_USER}}
           SSH_KEY: ${{secrets.SSH_KEY}}
         run: |
           echo "$SSH_KEY" > deploy_key
           chmod 600 deploy_key
-          scp -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/*.jar $SSH_USER@$SSH_HOST:/tmp/app.jar
-          ssh -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SSH_USER@$SSH_HOST <<EOF
+          scp -P $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/*.jar $SSH_USER@$SSH_HOST:/tmp/app.jar
+          ssh -p $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SSH_USER@$SSH_HOST <<EOF
             sudo mv /tmp/app.jar /opt/concheese/app.jar
             sudo systemctl restart concheese-server
           EOF
