@@ -8,7 +8,7 @@ spring:
     password: ${DB_PASS}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     open-in-view: true
     show-sql: true
 
