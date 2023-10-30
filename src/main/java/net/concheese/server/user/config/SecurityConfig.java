@@ -3,28 +3,27 @@ package net.concheese.server.user.config;
 import lombok.RequiredArgsConstructor;
 import net.concheese.server.user.oauth.LogoutSuccessHandler;
 import net.concheese.server.user.oauth.OAuth2AuthenticationSuccessHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.concheese.server.user.oauth.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import net.concheese.server.user.oauth.PrincipalOauth2UserService;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-  @Autowired
-  private PrincipalOauth2UserService principalOauth2UserService;
-  @Autowired
-  private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-  @Autowired
-  private LogoutSuccessHandler logoutSuccessHandler;
+  private final LoginService loginService;
+
+  private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
+  private final LogoutSuccessHandler logoutSuccessHandler;
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(csrf -> csrf
@@ -46,7 +45,7 @@ public class SecurityConfig {
             .defaultSuccessUrl("/login-success")
             .successHandler(oAuth2AuthenticationSuccessHandler)
             .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                .userService(principalOauth2UserService)
+                .userService(loginService)
             )
         )
         .logout(logout -> logout
@@ -59,7 +58,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  CorsConfigurationSource corsConfigurationSource() {
+  public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.addAllowedOriginPattern("*"); // 모든 도메인 허용
     configuration.addAllowedHeader("*"); // 모든 HTTP 헤더 허용

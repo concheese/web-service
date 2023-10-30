@@ -2,16 +2,16 @@ package net.concheese.server.user.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import net.concheese.server.user.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
 public class JwtTokenUtil {
+
   @Value("${jwt.secret}")
   private String secretKey;
 
@@ -22,12 +22,12 @@ public class JwtTokenUtil {
     claims.put("name", user.getName());
     claims.put("email", user.getEmail());
     claims.put("nickname", user.getNickname());
-    claims.put("role", user.getRole());
+    claims.put("role", user.getUserRole());
 
-    return generateAcceessToken(claims, user.getLoginId());
+    return generateAccessToken(claims, user.getLoginId());
   }
 
-  public String generateAcceessToken(Map<String, Object> claims, String loginId) {
+  public String generateAccessToken(Map<String, Object> claims, String loginId) {
     long tokenPeriod = 5 * 60 * 60;
     return Jwts.builder()
         .setClaims(claims)
@@ -36,4 +36,5 @@ public class JwtTokenUtil {
         .setExpiration(new Date(System.currentTimeMillis() + tokenPeriod * 1000))
         .signWith(SignatureAlgorithm.HS512, secretKey).compact();
   }
+
 }

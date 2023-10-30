@@ -3,7 +3,7 @@ package net.concheese.server.user.oauth;
 import lombok.Getter;
 import lombok.ToString;
 import net.concheese.server.user.model.User;
-import net.concheese.server.user.dto.OAuth2UserInfo;
+import net.concheese.server.user.model.OAuth2Attributes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -16,15 +16,15 @@ import java.util.Map;
 @ToString
 public class PrincipalDetails implements UserDetails, OAuth2User {
   private User user;
-  private OAuth2UserInfo oAuth2UserInfo;
+  private OAuth2Attributes oAuth2Attributes;
 
   public PrincipalDetails(User user) {
     this.user = user;
   }
 
-  public PrincipalDetails(User user, OAuth2UserInfo oAuth2UserInfo) {
+  public PrincipalDetails(User user, OAuth2Attributes oAuth2Attributes) {
     this.user = user;
-    this.oAuth2UserInfo = oAuth2UserInfo;
+    this.oAuth2Attributes = oAuth2Attributes;
   }
 
   // 유저의 권한 목록 반환
@@ -35,7 +35,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     collect.add(new GrantedAuthority() {
       @Override
       public String getAuthority() {
-        return user.getRole().toString();
+        return user.getUserRole().toString();
       }
     });
     return collect;
@@ -54,7 +54,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
    */
   @Override
   public String getUsername() {
-    return oAuth2UserInfo.getLoginId();
+    return oAuth2Attributes.getLoginId();
   }
 
 
@@ -86,11 +86,11 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
   @Override
   public Map<String, Object> getAttributes() {
-    return oAuth2UserInfo.getAttributes();
+    return oAuth2Attributes.getAttributes();
   }
 
   @Override
   public String getName() {
-    return oAuth2UserInfo.getName();
+    return oAuth2Attributes.getName();
   }
 }

@@ -1,5 +1,5 @@
 package net.concheese.server.user.model;
 
-public enum Role {
+public enum UserRole {
   ROLE_USER, ROLE_ADMIN
 }
