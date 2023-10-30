@@ -30,6 +30,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Firebase Key create
+        env:
+          $FIREBASE_CREDENTIALS: ${{secrets.FIREBASE_SECRET_KEY}}
+        run: |
+          echo "$FIREBASE_CREDENTIALS" > src/main/resources/credentials.json
+
       - name: Build with Gradle
         run: ./gradlew clean bootJar
 
