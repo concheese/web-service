@@ -34,7 +34,7 @@ public class Schedule extends BaseEntity {
   /**
    * 문화 활동의 예정된 날짜 및 시간입니다.
    */
-  @Column(name = "datetime")
+  @Column(name = "date_time")
   private LocalDateTime dateTime;
 
   /**
