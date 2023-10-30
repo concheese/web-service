@@ -1,8 +1,8 @@
 ---
 name: 버그 제출
-about: Create a report to help us improve
+about: 발생한 버그나 수정이 필요한 부분을 명세합니다.
 title: "[버그] :bug: "
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
