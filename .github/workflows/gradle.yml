@@ -42,7 +42,7 @@ jobs:
 
       - name: Firebase Key create
         env:
-          $FIREBASE_CREDENTIALS: ${{secrets.FIREBASE_SECRET_KEY}}
+          FIREBASE_CREDENTIALS: ${{secrets.FIREBASE_SECRET_KEY}}
         run: |
           echo "$FIREBASE_CREDENTIALS" > src/main/resources/credentials.json
 
