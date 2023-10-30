@@ -1,5 +1,6 @@
 package net.concheese.server.info.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,14 +45,14 @@ public class Concert extends BaseEntity {
   /**
    * 공연의 일정 목록입니다.
    */
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @Column(name = "schedules")
   private List<Schedule> schedules;
 
   /**
    * 공연의 티켓팅 정보 목록입니다.
    */
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @Column(name = "ticketings")
   private List<Ticketing> ticketings;
 
@@ -70,7 +71,7 @@ public class Concert extends BaseEntity {
   /**
    * 공연에 참여하는 연주자나 아티스트의 목록입니다.
    */
-  @OneToMany
+  @OneToMany()
   @Column(name = "performers")
   private List<Performer> performers;
 
