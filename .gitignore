@@ -35,6 +35,5 @@ out/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
-/src/main/resources/credentials.json
-/src/main/resources/env.properties
+../credentials.json
+../env.properties
