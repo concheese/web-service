@@ -1,5 +1,6 @@
 package net.concheese.server.user.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import net.concheese.server.user.model.User;
@@ -12,5 +13,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   Optional<User> findByLoginId(String id);
 
   void deleteByLoginId(String id);
-  
+
+  List<User> findByName(String name);
+
 }
