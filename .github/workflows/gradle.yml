@@ -29,7 +29,7 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
+        
       - name: Spring Security Key create
         env:
           NAVER_CLIENT_ID: ${{secrets.NAVER_CLIENT_ID}}
@@ -39,6 +39,12 @@ jobs:
           sed -i -r "s/^(NAVER_CLIENT_ID=).*/\1$NAVER_CLIENT_ID/" .env
           sed -i -r "s/^(NAVER_CLIENT_SECRET=).*/\1$NAVER_CLIENT_SECRET/" .env
           sed -i -r "s/^(JWT_SECRET=).*/\1$JWT_SECRET/" .env
+
+      - name: Firebase Key create
+        env:
+          $FIREBASE_CREDENTIALS: ${{secrets.FIREBASE_SECRET_KEY}}
+        run: |
+          echo "$FIREBASE_CREDENTIALS" > src/main/resources/credentials.json
 
       - name: Build with Gradle
         run: ./gradlew clean bootJar
