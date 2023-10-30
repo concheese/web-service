@@ -30,8 +30,10 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf
                         .disable()
                 )
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
+                )
                 .authorizeHttpRequests(autorize -> autorize
-                        .requestMatchers("api/vi/user/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(formLogin -> formLogin
@@ -63,6 +65,9 @@ public class SecurityConfig {
         configuration.addAllowedHeader("*"); // 모든 HTTP 헤더 허용
         configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
         configuration.setAllowCredentials(true); // 자격 증명 허용 설정
+
+        configuration.addExposedHeader("Authorization");
+        configuration.addExposedHeader("refreshToken");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 CORS 구성 적용
