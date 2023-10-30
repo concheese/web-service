@@ -45,14 +45,14 @@ public class Concert extends BaseEntity {
   /**
    * 공연의 일정 목록입니다.
    */
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @Column(name = "schedules")
   private List<Schedule> schedules;
 
   /**
    * 공연의 티켓팅 정보 목록입니다.
    */
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @Column(name = "ticketings")
   private List<Ticketing> ticketings;
 
