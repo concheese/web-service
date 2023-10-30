@@ -1,6 +1,7 @@
 package net.concheese.server.info.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -36,6 +37,7 @@ public class Schedule extends BaseEntity {
    * 문화 활동의 예정된 날짜 및 시간입니다.
    */
   @Column(name = "date_time")
+  @Schema(example = "1900-01-01 00:00:00", type = "string")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime dateTime;
 

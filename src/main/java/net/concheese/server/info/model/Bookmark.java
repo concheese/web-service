@@ -1,5 +1,7 @@
 package net.concheese.server.info.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,10 +32,14 @@ public class Bookmark extends BaseEntity {
 
   @Column(name = "created")
   @CreationTimestamp
+  @Schema(example = "1900-01-01 00:00:00", type = "string")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime created;
 
   @Column(name = "updated")
   @UpdateTimestamp
+  @Schema(example = "1900-01-01 00:00:00", type = "string")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime updated;
 
   @ManyToOne

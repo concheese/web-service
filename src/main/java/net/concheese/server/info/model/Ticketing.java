@@ -1,6 +1,7 @@
 package net.concheese.server.info.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +33,7 @@ public class Ticketing extends BaseEntity {
    * 티켓팅의 시작 시간을 나타냅니다.
    */
   @Column(name = "start")
+  @Schema(example = "1900-01-01 00:00:00", type = "string")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime start;
 
@@ -39,6 +41,7 @@ public class Ticketing extends BaseEntity {
    * 티켓팅의 종료 시간을 나타냅니다.
    */
   @Column(name = "end")
+  @Schema(example = "1900-01-01 00:00:00", type = "string")
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime end;
 
