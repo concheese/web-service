@@ -8,7 +8,6 @@ import net.concheese.server.firebase.model.NotificationMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class FirebaseMessagingService {
 
@@ -33,7 +32,5 @@ public class FirebaseMessagingService {
             e.printStackTrace();
             return "Error Sending Notification";
         }
-
     }
-
 }
