@@ -3,6 +3,9 @@ spring:
     import: file:./.env[.properties]
   profiles:
     include: secret
+  sql:
+    init:
+      encoding: UTF-8
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${DB_HOST}/${DB_DATABASE}
