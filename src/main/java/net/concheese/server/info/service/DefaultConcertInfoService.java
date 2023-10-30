@@ -134,17 +134,17 @@ public class DefaultConcertInfoService implements ConcertInfoService {
    */
   @Override
   public void delete(UUID id) {
-    concertRepository.findById(id).ifPresent(concert -> {
-      scheduleRepository.deleteAll(concert.getSchedules());
-      ticketingRepository.deleteAll(concert.getTicketings());
-      concert.getPerformers().forEach(performer -> {
-        List<Concert> concerts = listAllByPerformerName(performer.getName());
-        concerts.remove(concert);
-        if (concerts.isEmpty()) {
-          performerRepository.delete(performer);
-        }
-      });
-    });
+//    concertRepository.findById(id).ifPresent(concert -> {
+//      scheduleRepository.deleteAll(concert.getSchedules());
+//      ticketingRepository.deleteAll(concert.getTicketings());
+//      concert.getPerformers().forEach(performer -> {
+//        List<Concert> concerts = listAllByPerformerName(performer.getName());
+//        concerts.remove(concert);
+//        if (concerts.isEmpty()) {
+//          performerRepository.delete(performer);
+//        }
+//      });
+//    });
     concertRepository.deleteById(id);
   }
 
