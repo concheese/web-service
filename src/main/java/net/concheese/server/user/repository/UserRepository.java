@@ -1,14 +1,14 @@
 package net.concheese.server.user.repository;
 
-import java.util.Optional;
-import java.util.UUID;
-import net.concheese.server.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import net.concheese.server.user.model.User;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+import java.util.Optional;
 
-  Optional<User> findById(UUID id);
 
+public interface UserRepository extends JpaRepository<User, Long> {
+
+  Optional<User> findByLoginId(String loginId);
+  Optional<User> findByEmail(String email);
+  void deleteUserByloginId(String loginId);
 }

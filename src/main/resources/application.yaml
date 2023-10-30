@@ -1,6 +1,8 @@
 spring:
   config:
     import: file:./.env[.properties]
+  profiles:
+    include: secret
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://${DB_HOST}/${DB_DATABASE}
