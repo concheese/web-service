@@ -23,6 +23,7 @@ bin/
 *.iml
 *.ipr
 out/
+!**/.idea/codeStyles/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
@@ -37,4 +38,6 @@ out/
 .vscode/
 
 ### Local Configuration ###
-env.properties
+**/env.properties
+**/application-secret.*
+**/credentials.json
