@@ -2,9 +2,9 @@ package net.concheese.server.firebase.repository;
 
 import net.concheese.server.firebase.model.FirebaseUserToken;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
-@EnableJpaRepositories
+@Repository
 public interface FirebaseTokenRepository extends JpaRepository<FirebaseUserToken, Long> {
 
 }

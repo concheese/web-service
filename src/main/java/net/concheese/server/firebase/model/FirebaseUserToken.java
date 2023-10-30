@@ -3,17 +3,12 @@ package net.concheese.server.firebase.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import net.concheese.server.common.BaseEntity;
 
+@Getter
+@Setter
 @Entity
-@Table(name="Tokens")
-public class FirebaseUserToken {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Getter @Setter
+public class FirebaseUserToken extends BaseEntity {
     private String token;
-    @Getter @Setter
     private String userId;
-
 }

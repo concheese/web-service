@@ -1,4 +1,4 @@
-package net.concheese.server.firebase;
+package net.concheese.server.firebase.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
