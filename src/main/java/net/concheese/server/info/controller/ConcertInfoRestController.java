@@ -2,6 +2,7 @@ package net.concheese.server.info.controller;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import net.concheese.server.info.dto.ConcertForm;
 import net.concheese.server.info.model.Concert;
 import net.concheese.server.info.model.ConcertType;
@@ -76,13 +77,15 @@ public class ConcertInfoRestController {
       @RequestParam(value = "performer", required = false) String performerName) {
     List<Concert> concerts = concertInfoService.listAll();
     if (title != null) {
-      concerts.retainAll(concertInfoService.listAllByTitle(title));
+      concerts.removeIf(concert -> !concert.getTitle().contains(title));
     }
     if (type != null) {
       concerts.retainAll(concertInfoService.listAllByType(ConcertType.valueOf(type)));
     }
     if (performerName != null) {
-      concerts.retainAll(concertInfoService.listAllByPerformerName(performerName));
+      concerts = concerts.stream().filter(concert -> concert.getPerformers().stream()
+              .anyMatch(performer -> performer.getName().contains(performerName)))
+          .collect(Collectors.toList());
     }
     return concerts;
   }
