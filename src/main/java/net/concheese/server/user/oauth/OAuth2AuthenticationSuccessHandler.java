@@ -35,7 +35,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String jwtToken = jwtTokenUtil.generateToken(user);
 
-        String url = UriComponentsBuilder.fromUriString("http://localhost:5500/" + jwtToken)
+        String url = UriComponentsBuilder.fromUriString("http://concheese.net/" + jwtToken)
                 .build().toUriString();
         //클라이언트 리다이렉트 주소 -> 로그인 성공 후 페이지
 
