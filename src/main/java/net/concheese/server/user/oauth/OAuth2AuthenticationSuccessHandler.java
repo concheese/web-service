@@ -2,6 +2,8 @@ package net.concheese.server.user.oauth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import net.concheese.server.user.jwt.JwtTokenUtil;
 import net.concheese.server.user.model.User;
@@ -13,29 +15,31 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
-
 @Slf4j
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
   //로그인 성공시 호출
   @Autowired
   JwtTokenUtil jwtTokenUtil;
   @Autowired
   private UserRepository userRepository;
+
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException {
 
     log.debug("로그인 성공");
     OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-    String loginId = oAuth2User.getAttributes().get("id").toString();
+    System.out.println(oAuth2User.getAttributes());
+    String loginId = ((Map<String, Object>) oAuth2User.getAttributes().get("response")).get("id")
+        .toString();
 
     User user = userRepository.findByLoginId(loginId).orElse(null);
 
     String jwtToken = jwtTokenUtil.generateToken(user);
 
-    String url = UriComponentsBuilder.fromUriString("http://concheese.net/" + jwtToken)
+    String url = UriComponentsBuilder.fromUriString("https://concheese.net/" + jwtToken)
         .build().toUriString();
     //클라이언트 리다이렉트 주소 -> 로그인 성공 후 페이지
 

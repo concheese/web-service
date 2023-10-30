@@ -1,11 +1,11 @@
 package net.concheese.server.user.model;
 
 import java.util.Map;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Getter
-@Builder
 public class OAuth2Attributes {
 
   private final Map<String, Object> attributes;
@@ -15,19 +15,7 @@ public class OAuth2Attributes {
   private final String name;
   private final String email;
   private final String nickname;
-  private UserRole userRole;
-
-  public OAuth2Attributes(Map<String, Object> attributes, String attributeKey, String loginId,
-      String social, String name, String email, String nickname, UserRole userRole) {
-    this.attributes = attributes;
-    this.attributeKey = attributeKey;
-    this.loginId = loginId;
-    this.social = social;
-    this.name = name;
-    this.email = email;
-    this.nickname = nickname;
-    this.userRole = userRole;
-  }
+  private final UserRole userRole;
 
   public static OAuth2Attributes of(String social, String userNameAttributeName,
       Map<String, Object> attributes) {
@@ -43,19 +31,17 @@ public class OAuth2Attributes {
   private static OAuth2Attributes ofDefault(String social, String userNameAttributeName,
       Map<String, Object> attributes) {
     Map<String, Object> response = (Map<String, Object>) attributes.get(userNameAttributeName);
-    return OAuth2Attributes.builder().attributes(attributes).attributeKey(userNameAttributeName)
-        .loginId((String) response.get("id")).social(social).name((String) response.get("name"))
-        .email((String) response.get("email")).email((String) response.get("nickname"))
-        .userRole(UserRole.ROLE_USER).build();
+    return new OAuth2Attributes(attributes, userNameAttributeName, (String) response.get("id"),
+        social, (String) response.get("name"), (String) response.get("email"),
+        (String) response.get("nickname"), UserRole.ROLE_USER);
   }
 
   private static OAuth2Attributes ofNaver(String userNameAttributeName,
       Map<String, Object> attributes) {
     Map<String, Object> response = (Map<String, Object>) attributes.get(userNameAttributeName);
-    return NaverUserAttributes.builder().attributes(attributes).attributeKey(userNameAttributeName)
-        .loginId((String) response.get("id")).name((String) response.get("name"))
-        .email((String) response.get("email")).email((String) response.get("nickname"))
-        .userRole(UserRole.ROLE_USER).build();
+    return new NaverUserAttributes(attributes, userNameAttributeName, (String) response.get("id"),
+        (String) response.get("name"), (String) response.get("email"),
+        (String) response.get("nickname"), UserRole.ROLE_USER);
   }
 
   public User toEntity() {

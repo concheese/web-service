@@ -16,7 +16,7 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
   @Override
   public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-    String url = UriComponentsBuilder.fromUriString("http://concheese.net/logout-success")
+    String url = UriComponentsBuilder.fromUriString("https://concheese.net/logout-success")
         .build().toUriString();
     getRedirectStrategy().sendRedirect(request, response, url);
   }
