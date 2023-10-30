@@ -1,5 +1,6 @@
 package net.concheese.server.info.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,12 +32,14 @@ public class Ticketing extends BaseEntity {
    * 티켓팅의 시작 시간을 나타냅니다.
    */
   @Column(name = "start")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime start;
 
   /**
    * 티켓팅의 종료 시간을 나타냅니다.
    */
   @Column(name = "end")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime end;
 
   /**
