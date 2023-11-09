@@ -109,7 +109,9 @@ const Home = () => {
    
     
     if(array2.includes(select)){
-      let result = await getInfoFilter(select , "title")
+      const select2 = (select.length > 8) ? select.slice(0, 9) : select
+      let result = await getInfoFilter(select2 , "title")
+      
       setFilterTotalList([...filterTotal , result]) 
 
     }

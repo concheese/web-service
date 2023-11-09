@@ -34,7 +34,7 @@ export default function HomeCard({ data  }) {
         <a href={data.link}>
           <BsBookmarkStarFill style={{ color: "#bebebe" }} />
         </a> </div>
-        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title} </label> 
+        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title.slice(0,29)} </label> 
         </div>
    
       <Fonty />

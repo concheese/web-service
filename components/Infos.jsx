@@ -26,7 +26,8 @@ export default function Infos({ data }) {
             console.error(err);
            
         }
-        navigator(0)
+        navigator(`/`)
+        
     }
     // 수정 
     const updateDate = (e) =>{
