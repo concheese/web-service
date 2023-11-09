@@ -93,6 +93,7 @@ const Nav = () => {
                 <Link to={{ pathname: "/myPage" }}>
                   {userName}님 반갑습니다
                 </Link>
+                <Link to = {{pathname : "https://concheese.net/logout"}}>
                 <button
                   style={{
                     display: "block",
@@ -104,7 +105,7 @@ const Nav = () => {
                   }}
                 >
                   로그아웃
-                </button>
+                </button> </Link>
               </div>
             )}
           </LogInBtn>
@@ -136,6 +137,7 @@ const NavItem = styled.li`
   color: ${(props) => (props.p === true ? "#f49c5d" : "black")};
   &:hover {
     border-top: 3px solid #f49c5d;
+    color : orange;
   }
 `;
 // border: 1px solid #f49c5d;

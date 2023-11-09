@@ -8,11 +8,14 @@ export default function HomeCard({ data  }) {
   
   const scheduleDateRender = () => { 
    
-    
+    if (data.schedules.length > 0){
     return(
     data.schedules.map((dat) => {
       return <p style ={{ fontSize : "12px"}}> {dat.dateTime.slice(0,10)}/{dat.postalCode } </p> 
-    }))
+    }))}
+    else{
+      return <p>스케줄 없음</p>
+    }
   }
 
   
@@ -31,7 +34,7 @@ export default function HomeCard({ data  }) {
    
       <Fonty />
       
-      <L>  {data.performers[0].name} </L>
+      <L>  {(data.performers.length > 0) ?  data.performers[0].name : <p>해당없음</p> } </L>
        
 
       <div>
@@ -48,7 +51,8 @@ export default function HomeCard({ data  }) {
         </p>
         <p style={{ display: "flex", gap: "35px", margin: "5px 2px 5px" }}>
           <P> 티켓팅날짜</P>
-          <p style={{ fontSize: "12px" }}>{ (data.ticketings.length > 1 ) ? data.ticketings[1].start.slice(0,10) : <p>없음</p> }</p>
+          <p style={{ fontSize: "12px" }}>{ (data.ticketings.length > 1 ) ? data.ticketings[1].start.slice(0,10) : 
+          <p style = {{fontSize : "12px"}}>이름 없음</p> }</p>
         </p>
 
         <p style={{ display: "flex", gap: "10px", margin: "5px 2px 5px " }}>

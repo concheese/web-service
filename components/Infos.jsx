@@ -19,7 +19,7 @@ export default function Infos({ data }) {
     // 삭제
     const deletehandle = async () => {
         console.log(data.id)
-        try{deleteInfoPost(data.id);
+        try{ await deleteInfoPost(data.id);
             
         }
         catch(err){
@@ -74,9 +74,9 @@ export default function Infos({ data }) {
                 <P2> { (data.ticketings.length > 1 ) ? data.ticketings[1].start.slice(0,16) : <P2>해당 없음 </P2>} </P2>
                 <P2>{(data.ticketings.length > 1 ) ? data.ticketings[1].end.slice(0,16) : <P2>해당 없음 </P2> }</P2>
                 <P> [장소] 공연 날짜  </P>
-                {data.schedules.map((d) => {
+                {(data.schedules.length > 0 ) ? data.schedules.map((d) => {
                     return <P2> [{d.postalCode}] {d.dateTime.slice(0, 10 )}  </P2>
-                })}
+                }) : <P2>해당 없음</P2>}
               
                 <P>내용</P> 
                 <P2>{data.description}</P2>
@@ -142,7 +142,7 @@ export default function Infos({ data }) {
                         }}>{data.type}</span>
                     </div>
 
-                    <Im>{data.performers[0].name} </Im>
+                    <Im>{(data.performers.length > 0 ) ? data.performers[0].name : <p>이름 없음 </p>} </Im>
                     <div style={{ display: "flex" }}>
                         <h3 style={{
                             margin: "5px 0px 5px 8px"

@@ -4,14 +4,16 @@ import { BsFillPencilFill } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useState , useEffect } from 'react';
 import { AiFillCheckCircle } from "react-icons/ai"
-import { getInfoPosts } from "../api/api2"
+import { getInfoPosts , getInfoFilter } from "../api/api2"
 import Infos from "../components/Infos";
 
 
 export default function Info() {
   const [artist, setArtist] = useState("");
   const [artistList, setArtistList] = useState([]);
+  const [filterform , setFilterForm] = useState([])
   const [form, setForm] = useState([]);
+ 
   
   const a = useLocation()
 
@@ -54,24 +56,36 @@ export default function Info() {
   
 
 
+  const artistListchange = async () => {
+    if (artist.length > 0 ) {
+      setArtistList([...artistList , artist ])
 
-
-  const artistListchange = () => {
-    if (artist.length > 0) {
-      setArtistList([...artistList, artist])
+     let result = await getInfoFilter(artist , "performer");
+    setFilterForm( [...filterform, result])
+     
+      
     }
     setArtist("")
   }
+
   const artistListDelete = (value) => {
-    console.log(value)
+   
     const list = artistList.filter((artist) => {
       return artist !== value
     })
+    
     setArtistList(list)
+    let filterTemp = filterform.flat().filter((data) =>  {let b = data.performers.findIndex(index => index.name.includes(value)) 
+    return b === -1
+    })
+    setFilterForm(filterTemp)
+    
+    
   }
 
 
   const artistRender = () => {
+
     return (
       artistList.map((arti) => {
         return (
@@ -80,21 +94,21 @@ export default function Info() {
         )
       }))
   }
-
-
   
-
-  const makeForm = () => {
+  
+  
+   // async 사용하면 안됨 / promise 객체로 덮임 
+  const makeForm =  () => {
     
     let test1 = form;
-  
-    if (artistList.length !== 0) {
-      test1 = artistList.map((data) => { return form.filter(datas =>{
-       let l = datas.performers.findIndex((d) => {return d.name === data })
-      return (l !== -1 ) ? datas  : console.log("출력 성공")
-      
-      }) }).flat()
-    }
+    
+    
+   if(artistList.length > 0 ){
+    
+     test1 = filterform.flat()
+     
+ 
+   } 
 
     return (
       <>
