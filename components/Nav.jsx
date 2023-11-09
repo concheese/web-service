@@ -17,7 +17,11 @@ const Nav = () => {
   let navigate = useNavigate();
 
   const handleClick = () => {
+    setIsLog(false)
+    setUserName("")
+    window.sessionStorage.clear()
     navigate(`/logout`)
+    navigate( `/`)
   }
 
   const getUsers = async () => {
@@ -108,7 +112,7 @@ const Nav = () => {
                     color: "white",
                     borderRadius: "8px",
                   }}
-                  onClick = {handleClick}
+                  onClick = {() => {handleClick()}}
                 >
                   로그아웃
                 </button> 
