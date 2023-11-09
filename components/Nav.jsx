@@ -1,7 +1,7 @@
 import Wrapper from "../layout/Wrapper";
 import logo from "../assets/logo-second.png";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation , useNavigate} from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -14,6 +14,11 @@ const Nav = () => {
   const [userName, setUserName] = useState("");
   const token = searchParams.get("loginId");
   const [isLog, setIsLog] = useRecoilState(isLoggedIn);
+  let navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/logout`)
+  }
 
   const getUsers = async () => {
     if (!token) {
@@ -93,7 +98,7 @@ const Nav = () => {
                 <Link to={{ pathname: "/myPage" }}>
                   {userName}님 반갑습니다
                 </Link>
-                <Link to = {{pathname : "https://concheese.net/logout"}}>
+               
                 <button
                   style={{
                     display: "block",
@@ -103,9 +108,10 @@ const Nav = () => {
                     color: "white",
                     borderRadius: "8px",
                   }}
+                  onClick = {handleClick}
                 >
                   로그아웃
-                </button> </Link>
+                </button> 
               </div>
             )}
           </LogInBtn>
