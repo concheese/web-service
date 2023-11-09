@@ -5,6 +5,7 @@ import {BsPencilSquare} from "react-icons/bs";
 import { RiAlarmWarningLine } from "react-icons/ri";
 import {TiDelete} from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+import concheese2 from "../assets/1699544049717.png";
 
 export default function Infos({ data }) {
     const navigator = useNavigate();
@@ -133,7 +134,7 @@ export default function Infos({ data }) {
                 <div>
 
                 <TiDelete onClick = {() => {deletehandle()}}/> 
-                  <div style={{ width: "100%", height : "250px", borderRadius: "8px"  , backgroundColor : "#82B3E3"}} />
+                  <img src = {concheese2} style={{ width: "100%", height : "260px", borderRadius: "8px"  , backgroundColor : "#82B3E3"}} />
                  
                     <div>
                         <div style={{ borderBottom: "1px solid #eee" }}></div>

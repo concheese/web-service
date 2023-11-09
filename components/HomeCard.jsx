@@ -3,6 +3,7 @@ import { BsBookmarkStarFill } from "react-icons/bs";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {AiFillStar} from "react-icons/ai";
+import concheese from "../assets/1699544049717.png";
 
 export default function HomeCard({ data  }) {
   
@@ -34,10 +35,10 @@ export default function HomeCard({ data  }) {
         <a href={data.link}>
           <BsBookmarkStarFill style={{ color: "#bebebe" }} />
         </a> </div>
-        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title.slice(0,29)} </label> 
+        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title.slice(0,10)} ... </label> 
         </div>
    
-      <Fonty />
+      <Fonty><img style ={{ width : "100%" , height : "100%"}} src={concheese} alt="My Image" /></Fonty>
       
       <L>  {(data.performers.length > 0) ?  data.performers[0].name : <p>해당없음</p> } </L>
        
@@ -72,7 +73,7 @@ export default function HomeCard({ data  }) {
 
 const Fonty = styled.div`
   
-  height: 180px;
+  height: 220px;
   font-size: 33px;
   background-color: #ffffff;
   text-align: center;

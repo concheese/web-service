@@ -99,6 +99,7 @@ const Home = () => {
   const playerChange = async (e) => {
     e.preventDefault();
     setAutoComplete(false);
+    if(select.length > 0){
     let select2 = select
     if(select.includes("-")){
       select2 =  select.slice(1)
@@ -107,7 +108,6 @@ const Home = () => {
 
     setTotalList([...totalList , select2 ] )
    
-    
     if(array2.includes(select)){
       const select2 = (select.length > 8) ? select.slice(0, 9) : select
       let result = await getInfoFilter(select2 , "title")
@@ -122,7 +122,7 @@ const Home = () => {
 
     }
 
-    setSelect("");}
+    setSelect("");}}
 
   const playerRender = () => {
     
@@ -249,6 +249,7 @@ const Home = () => {
     return (
       <div style={{ display: "flex" }}>
         <DateSelect 
+        style = {{boxShadow: "0 0 10px 0.2px rgba(0, 0, 0, 0.1)"}}
           onChange={(e) => {
             setDate(e.target.value);
           }}
@@ -264,6 +265,7 @@ const Home = () => {
             border: "none",
             borderRadius: "7px",
             margin: "5px",
+            boxShadow: "0 0 10px 0.2px rgba(0, 0, 0, 0.1)"
           }}
           onChange={(e) => {
             setDateFilter(e.target.value);
@@ -285,6 +287,7 @@ const Home = () => {
               setallDate()
             ) : (
               <BsCalendarCheck
+               style = {{boxShadow: "0 0 10px 0.2px rgba(0, 0, 0, 0.1)"}}
                 onClick={() => {
                   const check2 = checkdate;
                   setCheckDate(!check2);
@@ -300,6 +303,7 @@ const Home = () => {
                   border: "none",
                   borderRadius: "7px",
                   margin: "5px",
+                  boxShadow: "0 0 10px 0.5px rgba(0, 0, 0, 0.1)"
                 }}
                 onChange={(e) => {autoFilter(e)}}
                 onClick = {() => {setAutoComplete(true)}}
@@ -351,11 +355,11 @@ const L_col = styled.li`
   padding: 0 5px;
 `;
 const Mold = styled.div`
-  height: 340px;
+  height: 370px;
   background-color: #f5f5dc;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #e3f2f7;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 `;
 
 const Tag = styled.span`
@@ -381,6 +385,7 @@ z-index : 3;
 width : 12%;
 background-color : #f5f5dc; 
 border-radius : 8px;
+box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.1);
 `
 
 
