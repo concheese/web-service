@@ -111,7 +111,7 @@ const WriteConcert = () => {
       console.error(err);
     }
     } 
-    navigator(0)
+    navigator(`/`)
 
   }
 

@@ -2,9 +2,10 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import {AiFillStar} from "react-icons/ai";
 
 export default function HomeCard({ data  }) {
+  
   
   const scheduleDateRender = () => { 
    
@@ -19,6 +20,9 @@ export default function HomeCard({ data  }) {
   }
 
   
+
+  
+  
   
   return (
   
@@ -30,7 +34,8 @@ export default function HomeCard({ data  }) {
         <a href={data.link}>
           <BsBookmarkStarFill style={{ color: "#bebebe" }} />
         </a> </div>
-        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title} </label> </div>
+        <label style ={{  fontStyle : "italic" , fontWeight : "bold"}}> {data.title} </label> 
+        </div>
    
       <Fonty />
       
