@@ -1,0 +1,31 @@
+[
+  { "id" : 112345,
+    "title": "뉴진스 투어",
+    "type": "concert",
+    "performers": [{"name" : "뉴진스"} , {"name" : "민지"}],
+    "ticketings": [{ "start": "2023-09-03 09:00:00", "end": "2023-09-04 09:00:00" ,
+        "status" : "PRE_SALE"}, {"start" : "2023-09-07 09:00:00" , "end" : "2023-09-10 00:00:00" ,
+        "status" : "GENERAL_SALE"}],
+    "schedules": [{ "dateTime": "2023-09-12 14:00:00.000", "postalCode" : 31234 }, {
+      "dateTime": "2023-09-15 14:00:00.000", "postalCode" : 31234
+    }]
+   ,
+    "description": "hellonewjeans",
+    "link": "naver.com"
+  } ,
+
+
+  { "id" : 112356,
+  "title": "뉴진스 투어",
+  "type": "concert",
+  "performers": [{"name" : "뉴진스"} , {"name" : "민지"}],
+  "ticketings": [{ "start": "2023-09-03 09:00:00", "end": "2023-09-04 09:00:00" ,
+      "status" : "PRE_SALE"}, {"start" : "2023-09-07 09:00:00" , "end" : "2023-09-10 00:00:00" ,
+      "status" : "GENERAL_SALE"}],
+  "schedules": [{ "dateTime": "2023-09-12 14:00:00.000", "postalCode" : 31234 }, {
+    "dateTime": "2023-09-15 14:00:00.000", "postalCode" : 31234
+  }]
+ ,
+  "description": "hellonewjeans",
+  "link": "naver.com"
+}]
