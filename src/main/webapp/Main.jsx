@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Feed from "../pages/Feed";
-import WriteConcert from "../pages/WriteConcert";
+import Home from "./pages/Home";
+import Feed from "./pages/Feed";
+import WriteConcert from "./pages/WriteConcert";
 import App from "./App";
-import Free from "../pages/Free";
-import Info from "../pages/Info";
-import Login from "../pages/Login";
-import MyPage from "../pages/MyPage";
+import Free from "./pages/Free";
+import Info from "./pages/Info";
+import Login from "./pages/Login";
+import MyPage from "./pages/MyPage";
 
 const Main = () => {
   return (

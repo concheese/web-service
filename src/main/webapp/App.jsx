@@ -1,5 +1,5 @@
 import { RecoilRoot } from "recoil";
-import Nav from "../components/Nav";
+import Nav from "./components/Nav";
 
 export default function App({ children }) {
   return (
