@@ -1,0 +1,63 @@
+name: Build React Project
+
+on:
+  push:
+    branches:
+      - devops/*
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # Use the version of Node.js that you prefer
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React project
+        run: npm run build
+
+      # Optional: you can also archive the build artifacts if needed
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist/
+
+      - name: Install SSH key
+        env:
+          SSH_KEY: ${{secrets.SSH_KEY}}
+        run: |
+          echo "$SSH_KEY" > deploy_key
+          chmod 600 deploy_key
+
+      - name: Clear Remote Directory
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_PORT: ${{secrets.SSH_PORT}}
+          SSH_USER: ${{secrets.SSH_USER}}
+        run: |
+          ssh -p $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "rm -rf /opt/concheese/*"
+
+      - name: Deploy to Linux server
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_PORT: ${{secrets.SSH_PORT}}
+          SSH_USER: ${{secrets.SSH_USER}}
+        run: |
+          scp -P $SSH_PORT -i deploy_key -o StrictHostKeyChecking=no -r ./dist/* $SSH_USER@$SSH_HOST:/opt/concheese/
+
+      - name: Cleanup SSH key
+        run: |
+          rm -f deploy_key
